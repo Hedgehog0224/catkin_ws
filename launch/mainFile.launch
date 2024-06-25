@@ -1,0 +1,4 @@
+<launch>
+  <node pkg="robot_pkg" type="ultrasonic.py" name="ultrasonic.py"/>
+  <node pkg="robot_pkg" type="shim_cringe.py" name="shim_cringe.py"/>
+</launch>
