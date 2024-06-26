@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import (
+from PyQt5.QtWidgets import (
     QApplication, 
     QMainWindow)
 from App import Ui_Form
