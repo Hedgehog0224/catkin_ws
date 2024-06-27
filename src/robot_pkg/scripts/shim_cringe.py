@@ -35,33 +35,18 @@ class robotcl():
     D = Motor( 0, -1)
     
     abcd = Route(A, B, C, D)
-    
-    # cod2 = 0
-    # cod5 = 0
-    # a = 0
-    # b = 0
-    # c = 0
-    # d = 0
 
     def __init__(self):
         rospy.init_node('MainNodeForRobot')
         rospy.Subscriber("scan", LaserScan, self.callback_scan)
         rospy.Subscriber("distance", Float32, self.callback_ultra_zd)
         rospy.Subscriber("Mode", xy, self.callback_mode)
-    
-    # def pub_xy(x, y):
-    #     global pubx
-    #     global puby
-    #     pubx.publish(x)
-    #     puby.publish(y)
         
     @staticmethod
     def callback_scan(data):
-        # global varStopAll
-        # global PredArrForMove
         if robotcl.mode in [0,3]:
             robotcl.abcd.move([0, 0, 0, 0], [0, 0, 0, 0])
-            rospy.loginfo('The mode in which the robot does not drive is selected')
+            rospy.loginfo('The mode in which the robot does not drive is selected: %s', robotcl.mode)
         
         if robotcl.varStopAll:
             robotcl.abcd.move([0, 0, 0, 0], [0, 0, 0, 0])
@@ -72,7 +57,7 @@ class robotcl():
             # print('NOTTTTTTT', min(data.ranges))
             if temp > 0.6:
                 # print('stop')               
-                rospy.loginfo('No obstacles detected, the robot is in rest mode')
+                rospy.loginfo('No obstacles detected, the robot is in rest mode: %s', round(temp, 2))
                 robotcl.abcd.move([0, 0, 0, 0], [0, 0, 0, 0])
             else:
                 # print('move')
@@ -101,7 +86,7 @@ class robotcl():
     def callback_ultra_zd(data):
         dataFloat = float(str(data)[6:-1])
         if dataFloat < 20.0:
-            print('Attention an obstacle has been detected')
+            rospy.loginfo('Attention an obstacle has been detected (cm): %s', round(dataFloat,2))
             robotcl.varStopAll = True
         else:
             robotcl.varStopAll = False
