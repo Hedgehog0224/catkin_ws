@@ -1,14 +1,10 @@
 #!/usr/bin/python3 
-import threading
 import sys
 import time
-from numpy import arange, round
+from numpy import round
 from math import cos, sin, pi
 
 import RPi.GPIO as GPIO
-import board
-from adafruit_pca9685 import PCA9685
-from evdev import InputDevice, categorize, ecodes, KeyEvent
 
 import rospy
 from std_msgs.msg import Float32
@@ -26,7 +22,8 @@ from MatMotors import Route, Motor
 class robotcl():
     mode = 0
     varStopAll = 0
-    Speed = [0.0, 0.0]
+    JoySpeed = [0.0, 0.0]
+    JoyAngle = 0
     PredArrForMove = [0,0,0,0]
     
     A = Motor( 1,  0)
@@ -44,13 +41,12 @@ class robotcl():
         
     @staticmethod
     def callback_scan(data):
-        if robotcl.mode in [0,3]:
+        if robotcl.varStopAll:
+            robotcl.abcd.move([0, 0, 0, 0], [0, 0, 0, 0])
+        elif robotcl.mode in [0,3]:
             robotcl.abcd.move([0, 0, 0, 0], [0, 0, 0, 0])
             rospy.loginfo('The mode in which the robot does not drive is selected: %s', robotcl.mode)
-        
-        elif robotcl.varStopAll:
-            robotcl.abcd.move([0, 0, 0, 0], [0, 0, 0, 0])
-        else:
+        elif robotcl.mode == 2:
             size = int(len(data.ranges))
         
             temp = min(data.ranges[int(size*0.1):int(size*0.9)])
@@ -81,6 +77,9 @@ class robotcl():
                     robotcl.abcd.move([0, 0, 0, 0], [0, 0, 0, 0])
                     sys.exit()
                 robotcl.PredArrForMove = ArrForMove
+        else:
+            JoyArr = robotcl.abcd.set_speed(JoySpeed[0], JoySpeed[1])
+            robotcl.abcd.move(JoyArr, [0,0,0,0])
     
     @staticmethod
     def callback_ultra_zd(data):
@@ -94,6 +93,8 @@ class robotcl():
     @staticmethod
     def callback_mode(data):
         robotcl.mode = data.mode
+        robotcl.JoySpeed = [data.x, data.y]
+        robotcl.JoyAngle = [data.angle]
 
 cringebot = robotcl()
 rospy.sleep(0.05)
