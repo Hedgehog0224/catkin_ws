@@ -79,8 +79,8 @@ class robotcl():
                     robotcl.abcd.move([0, 0, 0, 0], [0, 0, 0, 0])
                     sys.exit()
                 robotcl.PredArrForMove = ArrForMove
-        else:
-            JoyArr = robotcl.abcd.set_speed(robotcl.JoySpeed[0], robotcl.JoySpeed[1], turnOsSys=45)
+        else:            
+            JoyArr = robotcl.abcd.set_speed(robotcl.JoySpeed[0], robotcl.JoySpeed[1], turnOsSys=45, ModeOfAngles = 1, FuncOfAngel = [0, 2])
             robotcl.abcd.move(JoyArr, [0,0,0,0])
     
     @staticmethod
