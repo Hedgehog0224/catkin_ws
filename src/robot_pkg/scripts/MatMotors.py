@@ -22,7 +22,7 @@ class Motor():
     #  === Вычесления ===
     def _single_front_potate(self, V, fid):
         # Расчёт скорости колеса (экземпляра) из скоростей (x, y)
-        self.speed =  self.x_multi*V[0] + self.y_multi*V[1] + self.L*fid
+        self.speed =  self.x_multi*V[0] + self.y_multi*V[1] + fid
 
     def set_speed_shim(self, newSpeed):
         self.speed_shim = newSpeed
