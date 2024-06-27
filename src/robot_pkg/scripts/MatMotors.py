@@ -75,9 +75,8 @@ class Route(Motor):
 
     @staticmethod
     # Статичный метод для численного диференцирования (для поворота)
-    def __differencial(mode,*args):
+    def __differencial(mode, args):
         if not mode == 0:
-            args = args[0]
             if len(args) == 1:
                 dif = 0
             else: 
