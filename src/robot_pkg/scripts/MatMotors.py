@@ -105,7 +105,7 @@ class Route(Motor):
         else: 
             print("ERROR INCORRECT DATA")
             return([0, 0])
-        pole_len = (a**2+b**2)**0.5
+        pole_len = (a**2+b**2)**0.5/2**0.5
             
         xr = round(pole_len*cos(pole_phi+alfa), 2)
         yr = round(pole_len*sin(pole_phi+alfa), 2)
