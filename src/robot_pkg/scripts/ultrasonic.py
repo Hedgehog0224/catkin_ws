@@ -18,7 +18,7 @@ def setUpPins(InPin, OutPin):
     time.sleep(0.00001)
     GPIO.output(outputPin,False)
 
-def ultrasonic_detection(inputPin, outputPin, pub, chPrint=0):
+def ultrasonic_detection(inputPin, outputPin, pub):
     setUpPins(inputPin, outputPin)
         
     while GPIO.input(inputPin) == 0:
@@ -30,14 +30,14 @@ def ultrasonic_detection(inputPin, outputPin, pub, chPrint=0):
     distance = round(currentTime * 17150, 2)
     pub.publish(Float32(distance))
 
-    if chPrint: print("Distance is", distance, "cm")
+    # if chPrint: print("Distance is", distance, "cm")
     GPIO.cleanup()
 
-def start(chPrint=0):
+def start():
     # rospy.init_node('ultrasonic')
     pub = rospy.Publisher('distance', Float32, queue_size=10)
     while not rospy.is_shutdown():    
-        distance = ultrasonic_detection(18, 16, pub, chPrint)
+        distance = ultrasonic_detection(18, 16, pub)
         
 if __name__=='__main__':
     rospy.init_node('UltrasonicNode')
@@ -45,5 +45,5 @@ if __name__=='__main__':
     GPIO.setwarnings(False)
     if GPIO.getmode() == None:
         GPIO.setmode(GPIO.BOARD)
-        
-    start(1)
+
+    start()
