@@ -5,6 +5,8 @@ from numpy import round
 from math import cos, sin, pi
 
 import RPi.GPIO as GPIO
+import board
+from adafruit_pca9685 import PCA9685
 
 import rospy
 from std_msgs.msg import Float32
@@ -78,7 +80,7 @@ class robotcl():
                     sys.exit()
                 robotcl.PredArrForMove = ArrForMove
         else:
-            JoyArr = robotcl.abcd.set_speed(JoySpeed[0], JoySpeed[1])
+            JoyArr = robotcl.abcd.set_speed(robotcl.JoySpeed[0], robotcl.JoySpeed[1])
             robotcl.abcd.move(JoyArr, [0,0,0,0])
     
     @staticmethod
