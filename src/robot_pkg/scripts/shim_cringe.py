@@ -44,7 +44,7 @@ class robotcl():
     @staticmethod
     def callback_scan(data):
         if robotcl.varStopAll:
-            robotcl.abcd.move([0, 0, 0, 0], [0, 0, 0, 0])
+            robotcl.abcd.move(robotcl.abcd.set_speed(1, 1), [0, 0, 0, 0])
         elif robotcl.mode in [0,3]:
             robotcl.abcd.move([0, 0, 0, 0], [0, 0, 0, 0])
             rospy.loginfo('The mode in which the robot does not drive is selected: %s', robotcl.mode)
@@ -80,7 +80,7 @@ class robotcl():
                     sys.exit()
                 robotcl.PredArrForMove = ArrForMove
         else:
-            JoyArr = robotcl.abcd.set_speed(robotcl.JoySpeed[0], robotcl.JoySpeed[1], turnOsSys)
+            JoyArr = robotcl.abcd.set_speed(robotcl.JoySpeed[0], robotcl.JoySpeed[1], turnOsSys=45)
             robotcl.abcd.move(JoyArr, [0,0,0,0])
     
     @staticmethod
