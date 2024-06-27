@@ -48,7 +48,7 @@ class robotcl():
             robotcl.abcd.move([0, 0, 0, 0], [0, 0, 0, 0])
             rospy.loginfo('The mode in which the robot does not drive is selected: %s', robotcl.mode)
         
-        if robotcl.varStopAll:
+        elif robotcl.varStopAll:
             robotcl.abcd.move([0, 0, 0, 0], [0, 0, 0, 0])
         else:
             size = int(len(data.ranges))
