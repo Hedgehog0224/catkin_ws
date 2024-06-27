@@ -76,18 +76,13 @@ class Route(Motor):
     @staticmethod
     # Статичный метод для численного диференцирования (для поворота)
     def __differencial(mode, args):
-        if not mode == 0:
-            if len(args) == 1:
-                dif = 0
-            else: 
-                time = arange(0, 1+(1/len(args)), 1/len(args))    
-                if mode ==  1:
-                    dif = (args[-1]-args[0])/(time[-1]-time[1])
-                elif mode == 2:
-                    a = args[-1]/(time[-1]**2)
-                    dif = 2*a*time
+        if not mode:
+            return 0
+        else:
+            # time = arange(0, 1+(1/len(args)), 1/len(args))    
+            if mode ==  1:
+                dif = (args[1]-args[0])/(0.5)
             return dif
-        else: return 0
     
     @staticmethod
     # Статичный метод для вращения точек (a,b) на угол alfa
