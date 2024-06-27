@@ -24,6 +24,7 @@ if GPIO.getmode() == None:
 from MatMotors import Route, Motor
 
 class robotcl():
+    mode = 0
     varStopAll = 0
     Speed = [0.0, 0.0]
     PredArrForMove = [0,0,0,0]
@@ -58,19 +59,23 @@ class robotcl():
     def callback_scan(data):
         # global varStopAll
         # global PredArrForMove
+        if robotcl.mode in [0,3]:
+            robotcl.abcd.move([0, 0, 0, 0], [0, 0, 0, 0])
+            rospy.loginfo('The mode in which the robot does not drive is selected')
         
         if robotcl.varStopAll:
-            print('=== Obstacle ===')
+            robotcl.abcd.move([0, 0, 0, 0], [0, 0, 0, 0])
         else:
             size = int(len(data.ranges))
         
             temp = min(data.ranges[int(size*0.1):int(size*0.9)])
             # print('NOTTTTTTT', min(data.ranges))
             if temp > 0.6:
-                print('stop')
+                # print('stop')               
+                rospy.loginfo('No obstacles detected, the robot is in rest mode')
                 robotcl.abcd.move([0, 0, 0, 0], [0, 0, 0, 0])
             else:
-                print('move')
+                # print('move')
                 res = [i for i, j in enumerate(data.ranges) if j == temp]
                 minNum = round(min(res)/size, 2)
                 maxNum = round(max(res)/size, 2)
@@ -97,7 +102,6 @@ class robotcl():
         dataFloat = float(str(data)[6:-1])
         if dataFloat < 20.0:
             print('Attention an obstacle has been detected')
-            robotcl.abcd.move([0, 0, 0, 0], [0, 0, 0, 0])
             robotcl.varStopAll = True
         else:
             robotcl.varStopAll = False
