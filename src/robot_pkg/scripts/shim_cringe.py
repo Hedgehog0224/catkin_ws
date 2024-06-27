@@ -96,7 +96,7 @@ class robotcl():
     def callback_mode(data):
         robotcl.mode = data.mode
         robotcl.JoySpeed = [data.x, data.y]
-        robotcl.JoyAngle = [data.angle]
+        robotcl.JoyAngle = data.angle
 
 cringebot = robotcl()
 rospy.sleep(0.05)
