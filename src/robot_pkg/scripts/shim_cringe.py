@@ -80,7 +80,7 @@ class robotcl():
                     sys.exit()
                 robotcl.PredArrForMove = ArrForMove
         else:
-            JoyArr = robotcl.abcd.set_speed(robotcl.JoySpeed[0], robotcl.JoySpeed[1])
+            JoyArr = robotcl.abcd.set_speed(robotcl.JoySpeed[0], robotcl.JoySpeed[1], turnOsSys)
             robotcl.abcd.move(JoyArr, [0,0,0,0])
     
     @staticmethod
