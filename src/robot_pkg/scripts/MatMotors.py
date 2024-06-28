@@ -6,6 +6,8 @@ import RPi.GPIO as GPIO
 import board
 from adafruit_pca9685 import PCA9685
 
+from rospy import logerr
+
 class Motor():
     # === Инициализация ===
     def __init__(self, x_multi, y_multi):
@@ -105,14 +107,14 @@ class Route(Motor):
     
     def move(self, SpeedsMotors, preSpeedsMotors, numsPins):
         # Передача скоростей моторам
-        SpeedsMotors = array(SpeedsMotors)/max(SpeedsMotors)
+        if max(SpeedsMotors): SpeedsMotors = array(SpeedsMotors)/abs(max(SpeedsMotors))
         for n, i in enumerate(self.ListOfMotors):
             try: 
                 i.set_speed_shim(int(hex(int(abs(SpeedsMotors[n]**4)*65535)), 16))
             #     Speed[i] = int(hex(int(abs(arrOfSpeeds[i]/(arrOfSpeeds[i]-preArr[i]))*65535)), 16)
             #     Speed[i] = int(hex(int(abs(arrOfSpeeds[i]**2 + ((arrOfSpeeds[i]-preArr[i])*0))*65535)), 16)
             except: 
-                rospy.logerr("ERROR OF MATH")
+                logerr("ERROR OF MATH")
                 print(int(hex(int(abs(SpeedsMotors[n]**4)*65535)), 16))
             
         self.pca.channels[numsPins[0]].duty_cycle = self.ListOfMotors[0].speed_shim
