@@ -95,7 +95,7 @@ class Route(Motor):
             if a > 0: pole_phi = deg2rad(0)
             if a < 0: pole_phi = deg2rad(180)
         else: 
-            print("ERROR INCORRECT DATA")
+            rospy.logerr("ERROR INCORRECT DATA")
             return([0, 0])
         pole_len = ((a**2+b**2)**0.5)/(2**0.5)
             
@@ -112,7 +112,8 @@ class Route(Motor):
             #     Speed[i] = int(hex(int(abs(arrOfSpeeds[i]/(arrOfSpeeds[i]-preArr[i]))*65535)), 16)
             #     Speed[i] = int(hex(int(abs(arrOfSpeeds[i]**2 + ((arrOfSpeeds[i]-preArr[i])*0))*65535)), 16)
             except: 
-                print('=== Error Of Math ===')
+                rospy.logerr("ERROR OF MATH")
+                print(int(hex(int(abs(SpeedsMotors[n]**4)*65535)), 16))
             
         self.pca.channels[numsPins[0]].duty_cycle = self.ListOfMotors[0].speed_shim
         self.pca.channels[numsPins[1]].duty_cycle = int(SpeedsMotors[0] > 0)*65535
