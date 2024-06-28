@@ -48,7 +48,7 @@ class robotcl():
             robotcl.abcd.move(robotcl.abcd.set_speed(1, 1), [0, 0, 0, 0], robotcl.I2Cpins)
         elif robotcl.mode in [0,3]:
             robotcl.abcd.move([0, 0, 0, 0], [0, 0, 0, 0], robotcl.I2Cpins)
-            rospy.loginfo('The mode in which the robot does not drive is selected: %s', robotcl.mode)
+            rospy.loginfo_throttle(20, 'The mode in which the robot does not drive is selected: %s', robotcl.mode)
         elif robotcl.mode == 2:
             size = int(len(data.ranges))
         
@@ -56,7 +56,7 @@ class robotcl():
             # print('NOTTTTTTT', min(data.ranges))
             if temp > 0.6:
                 # print('stop')               
-                rospy.loginfo('No obstacles detected, the robot is in rest mode: %s', round(temp, 2))
+                rospy.loginfo_throttle(20, 'No obstacles detected, the robot is in rest mode: %s', round(temp, 2))
                 robotcl.abcd.move([0, 0, 0, 0], [0, 0, 0, 0], robotcl.I2Cpins)
             else:
                 # print('move')
