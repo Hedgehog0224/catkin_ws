@@ -90,6 +90,7 @@ class Route(Motor):
         pole_phi =0
         if a and b:
             pole_phi = atan(b/a)
+            if a < 0: pole_phi = pole_phi + 3.14
         elif a == 0:
             if b > 0: pole_phi = deg2rad(90)
             if b < 0: pole_phi = deg2rad(270)
