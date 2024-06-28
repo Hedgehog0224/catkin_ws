@@ -1,4 +1,4 @@
-from numpy import arange, deg2rad, round
+from numpy import arange, deg2rad, round, array
 from math import sin, cos, atan
 from random import random
 
@@ -103,9 +103,9 @@ class Route(Motor):
         yr = round(pole_len*sin(pole_phi+alfa), 2)
         return([xr, yr])
     
-    def move(self, SpeedsMotors, preSpeedsMotors, numsPins=[0,1,2,5,3,4,6,8,7,11,9,10]):
+    def move(self, SpeedsMotors, preSpeedsMotors, numsPins):
         # Передача скоростей моторам
-        
+        SpeedsMotors = array(SpeedsMotors)/max(SpeedsMotors)
         for n, i in enumerate(self.ListOfMotors):
             try: 
                 i.set_speed_shim(int(hex(int(abs(SpeedsMotors[n]**4)*65535)), 16))
