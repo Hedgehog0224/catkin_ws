@@ -1,6 +1,5 @@
 #!/usr/bin/python3 
 import sys
-import time
 from numpy import round
 from math import cos, sin, pi
 
@@ -14,7 +13,7 @@ from sensor_msgs.msg import LaserScan
 from robot_pkg.msg import xy
 
 # GPIO.setmode(GPIO.BOARD)
-start_time = time.time()
+
 GPIO.setwarnings(False)
 if GPIO.getmode() == None:
     GPIO.setmode(GPIO.BOARD)  
@@ -76,9 +75,6 @@ class robotcl():
                 robotcl.abcd.move(ArrForMove, robotcl.PredArrForMove, robotcl.I2Cpins)
                 #abcd.move([1,1,0,0], [0,0,0,0])
         
-                if time.time() - start_time > 360:
-                    robotcl.abcd.move([0, 0, 0, 0], [0, 0, 0, 0], robotcl.I2Cpins)
-                    sys.exit()
                 robotcl.PredArrForMove = ArrForMove
         else:            
             JoyArr = robotcl.abcd.set_speed(robotcl.JoySpeed[0], robotcl.JoySpeed[1], turnOsSys=45, ModeOfAngles = 1, FuncOfAngel = [0, -robotcl.JoyAngle])
