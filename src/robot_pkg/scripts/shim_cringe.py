@@ -81,7 +81,7 @@ class robotcl():
                     sys.exit()
                 robotcl.PredArrForMove = ArrForMove
         else:            
-            JoyArr = robotcl.abcd.set_speed(robotcl.JoySpeed[0], robotcl.JoySpeed[1], turnOsSys=45, ModeOfAngles = 1, FuncOfAngel = [0, robotcl.JoyAngle])
+            JoyArr = robotcl.abcd.set_speed(robotcl.JoySpeed[0], robotcl.JoySpeed[1], turnOsSys=45, ModeOfAngles = 1, FuncOfAngel = [0, -robotcl.JoyAngle])
             robotcl.abcd.move(JoyArr, [0,0,0,0], robotcl.I2Cpins)
     
     @staticmethod
