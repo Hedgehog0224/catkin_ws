@@ -1,0 +1,7 @@
+<launch>
+  <node pkg="robot_pkg" type="ultrasonic.py" name="ultrasonicNode"/>
+  <node pkg="robot_pkg" type="shim_cringe.py" name="MainCringeNode"/>
+  <node pkg="robot_pkg" type="chooseMode.py" name="chooseModeNode"/>
+  <node pkg="rplidar_ros" type="rplidarNode" name="rplidarNode"/>
+  <node pkg="joy" type="joy_node" name="joy_node"/>
+</launch>
