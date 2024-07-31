@@ -6,6 +6,7 @@
 2. _https://techblog.sdstudio.top/edpresso/the-fatal-refusing-to-merge-unrelated-histories-git-error_
 3. _https://www.atlassian.com/ru/git/tutorials/saving-changes/gitignore_
 4. _https://roquebase.wordpress.com/2023/09/02/%D1%87%D1%82%D0%BE-%D0%B4%D0%B5%D0%BB%D0%B0%D1%82%D1%8C-%D1%81-%D0%BE%D1%88%D0%B8%D0%B1%D0%BA%D0%BE%D0%B9-git-refusing-to-merge-unrelated-histories/_
+5. _https://selectel.ru/blog/tutorials/what-is-git-push-and-how-to-use-it/_
 
 ### Благодарность за участие в разработке:
 - Михаил
