@@ -4,7 +4,7 @@
 Существует специально созданная под МК Операционная Система Raspberry Pi OS (ранее называвшаяся Raspbian), созданная на базе дистрибутива Debian, которая была оптимизирована специально для микрокомпьютеров Raspberry Pi.\
 В нашем случае устанавливается **Raspberry Pi OS Lite (64-bite)**.
 
-_https://robotclass.ru/articles/raspberry-pi-os-install/_
+_https://robotclass.ru/articles/raspberry-pi-os-install/_\
 _https://habr.com/ru/sandbox/174416/_
 
 ### 1.1 Установка Raspberry Pi Imager
