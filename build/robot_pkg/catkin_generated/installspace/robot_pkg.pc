@@ -1,8 +1,0 @@
-prefix=/home/me/Документы/catkin_ws/install
-
-Name: robot_pkg
-Description: Description of robot_pkg
-Version: 0.0.0
-Cflags: -I${prefix}/include
-Libs: -L${prefix}/lib 
-Requires: 

@@ -1,8 +1,0 @@
-prefix=/home/me/Документы/catkin_ws/devel
-
-Name: robot_pkg
-Description: Description of robot_pkg
-Version: 0.0.0
-Cflags: -I/home/me/Документы/catkin_ws/devel/include
-Libs: -L${prefix}/lib 
-Requires: 
