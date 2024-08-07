@@ -1,8 +1,8 @@
 #!/usr/bin/python3 
 import sys
-from numpy import round
+from numpy import round, array
 from math import cos, sin, pi
-from time import sleep,time
+from time import sleep, time
 
 import RPi.GPIO as GPIO
 import board
@@ -51,7 +51,7 @@ class robotcl():
 
         elif robotcl.mode == 2:
             stTime = time()
-            new_data = data.ranges[0:int(len(data.ranges)*0.4)] + data.ranges[int(len(data.ranges)*0.6):int(len(data.ranges))]
+            new_data = array(data.ranges[0:int(len(data.ranges)*0.4)] + data.ranges[int(len(data.ranges)*0.6):int(len(data.ranges))])
             size_nd = len(new_data)
             temp = min(new_data)
             # stop               
@@ -66,19 +66,10 @@ class robotcl():
                     sr = abs(((border[0] + border[1])/2)-size_nd/2)
                 else:
                     sr = (border[0] + border[1])/2
-                # res = [i for i, j in enumerate(data.ranges) if j == temp]
-                # minNum = round(min(res)/size, 2)
-                # maxNum = round(max(res)/size, 2)
-                # if maxNum - minNum > size*0.5:
-                #     sr = minNum
-                # else: sr = (sum(res)/len(res))/size
                 x = cos((sr/size_nd)*2*pi)
                 y = sin((sr/size_nd)*2*pi)
-                # rospy.logwarn("Speeds: %s, %s", x, y)
                 ArrForMove = robotcl.abcd.set_speed(x, y)
                 robotcl.abcd.move(ArrForMove, robotcl.PredArrForMove, robotcl.I2Cpins)
-                #abcd.move([1,1,0,0], [0,0,0,0])
-                # rospy.loginfo(ArrForMove)
                 robotcl.PredArrForMove = ArrForMove
                 workTime = time() - stTime
                 rospy.loginfo("Time work: %s", workTime)
@@ -87,10 +78,8 @@ class robotcl():
             if ((abs(JoyArr[0])<0.05) and (abs(JoyArr[1])<0.05) and (abs(JoyArr[2])<0.05) and (abs(JoyArr[3])<0.05)):
                 rospy.loginfo("Stoping...")
                 robotcl.abcd.move([-robotcl.PredArrForMove[0]*2, -robotcl.PredArrForMove[1]*2, -robotcl.PredArrForMove[2]*2, -robotcl.PredArrForMove[3]*2], [0,0,0,0], robotcl.I2Cpins)
-                # rospy.logwarn("1) Speeds: %s; PreSpeeds: %s", JoyArr, robotcl.PredArrForMove)
                 sleep(0.05)
             robotcl.abcd.move(JoyArr, [0,0,0,0], robotcl.I2Cpins)
-            # rospy.logwarn("2) Speeds: %s; PreSpeeds: %s", JoyArr, robotcl.PredArrForMove)
             robotcl.PredArrForMove = JoyArr
     
     @staticmethod
