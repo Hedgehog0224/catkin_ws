@@ -54,11 +54,11 @@ class robotcl():
         if robotcl.varStopAll:
             robotcl.abcd.move(robotcl.abcd.set_speed(1, 1), [0, 0, 0, 0], robotcl.I2Cpins)
 
-        elif robotcl.mode in 0:
+        elif robotcl.mode == 0:
             robotcl.abcd.move([0, 0, 0, 0], [0, 0, 0, 0], robotcl.I2Cpins)
             rospy.loginfo_throttle(20, 'The mode in which the robot does not drive is selected: %s', robotcl.mode)
             
-        elif robotcl.mode in 3:
+        elif robotcl.mode == 3:
             for i in range(2):
                 robotcl.abcd.move([-1, -1, -1, -1], [0, 0, 0, 0], robotcl.I2Cpins)
                 sleep(1)
