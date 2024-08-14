@@ -1,6 +1,6 @@
 ## Из-за проблем с нормальным сохранением, заливкой и скачиванием файлов, создал отдельную ветку под Документацию
 
-![Image_1](https://github.com/Hedgehog0224/catkin_ws/blob/main/Documentation/Memes/001.png)
+![Image_1](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Memes/001.png)
 **Катя может быть RickRoll не обещала, но я же не Катя)**
 
 ## Список написанных документов:
