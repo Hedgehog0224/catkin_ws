@@ -1,4 +1,5 @@
-#!/usr/bin/python3 
+#!/usr/bin/python3
+# Библиотеки
 import sys
 from numpy import round
 from math import cos, sin, pi
@@ -13,13 +14,17 @@ from std_msgs.msg import Float32
 from sensor_msgs.msg import LaserScan
 from robot_pkg.msg import xy
 
+# Настройка пинов распы
 GPIO.setwarnings(False)
 if GPIO.getmode() == None:
     GPIO.setmode(GPIO.BOARD)  
 
+# Локальная библиотека для вычислений
 from MatMotors import Route, Motor
 
+# Главный класс
 class robotcl():
+    # Переменные класса
     I2Cpins = [0,1,2,5,3,4,6,8,7,11,9,10]
     mode = 0
     varStopAll = 0
@@ -27,19 +32,23 @@ class robotcl():
     JoyAngle = 0
     PredArrForMove = [0,0,0,0]
     
+    # Объекты моторов
     A = Motor( 1,  0)
     B = Motor( 0,  1)
     C = Motor(-1,  0)
     D = Motor( 0, -1)
-    
+
+    # Объект совокупности моторов
     abcd = Route(A, B, C, D)
 
+    # Инициализация нод и подписчиков
     def __init__(self):
         rospy.init_node('MainNodeForRobot')
         rospy.Subscriber("scan", LaserScan, self.callback_scan)
         rospy.Subscriber("distance", Float32, self.callback_ultra_zd)
         rospy.Subscriber("Mode", xy, self.callback_mode)
-        
+    
+    # Функция обратной связи лидара
     @staticmethod
     def callback_scan(data):
         if robotcl.varStopAll:
