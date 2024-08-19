@@ -13,6 +13,7 @@
 | 3     | R3-horizontal |
 | 4     | R3-vertical   |
 | 5     | L2            |
+
 *Выделенные курсивом не используются в роботе изначально.*
 
 ![Image_1](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Images/003-5-1.jpg)
