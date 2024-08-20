@@ -1,6 +1,6 @@
-![Image_1](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Memes/No_cringe.jpg)
+![Image_1](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Memes/No_cringe_HD.png)
 
-Каждый день как предыдущий...
+*День другой, задачи те же...*
 
 Список файлов и их назначение:
 | Номер | Наименоваиние                         | Назначение                                                            |
