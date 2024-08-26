@@ -59,7 +59,7 @@ chooseModeClass.msg.angle = data.axes[0]    ->    chooseModeClass.msg.angle = da
 chooseModeClass.msg.angle = data.axes[0]    ->    chooseModeClass.msg.angle = data.buttons[0]
 ```
 
-### 2.1 Добавление новых кнопок
+### 2.2 Добавление новых кнопок
 Чтобы добавить новую кнопку, необходимо:
 1. Изменение сообщения (добавление новых элементов в файл **xy.msg**);
 2. Добавление нового кода в издатель-ноду (**chooseMode.py**) для корректного формирования нового сообщения;
