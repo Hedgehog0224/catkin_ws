@@ -33,17 +33,19 @@
 
 - В-третьих, из списка выбрать неободимый пункт (скорее всего, будет отображаться единственный пункт - вставленная в разъём компьютера microSD).\
 ![Image_8](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Images/003-1-8.png)\
-![Image_9](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Images/003-1-9.png)
+![Image_9](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Images/003-1-9.png)\
+![Image_10](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Images/003-1-10.png)\
+![Image_11](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Images/003-1-11.png)
 
 Далее, необходимо нажать на кнопку **Далее**. В открывшимся окне нажать на кнопку **Изменить параметры**. Далее:
 1. Выбрать раздел **Общее**. Вводите *Имя хоста*, задаёте *Имя пользователя* и *Пароль* (пароль требуется для подключения к МК и автоматически шифруется при последующем открытии приложения), *SSID* (название Wi-Fi, к которому подключается МК), *Пароль* (происходит то же, что и с предыдущим). Обязательно необходимо выбрать *Страну Wi-Fi* как **RU**. Можно настроить часовой пояс.\
-![Image_10](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Images/003-1-10.png)
+![Image_12](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Images/003-1-12.png)
 
 2. Выбрать раздел **Службы**, выбрать **Включить SSH** (настройка аутентификации по паролю в зависимости от пожеланий). Это необходимо для последующей работы с удалённого устройства.
-![Image_11](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Images/003-1-11.png)
+![Image_13](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Images/003-1-13.png)
 
 3. Выбрать раздел **Параметры**. Настройка по усмотрению.
-![Image_12](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Images/003-1-12.png)
+![Image_14](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Images/003-1-14.png)
 
 Для последующей установки необходимо сохранить параметры (нажав на кнопку **Сохранить**) и нажать на кнопку **Да**. Происходит запись образа на microSD. В противном случае, можно вернуться к изменению параметров (кнопка **Изменить параметры**), либо вернуть параметры по умолчанию (кнопка **Нет, очистить параметры**), либо стереть все существующие данные с microSD, либо вернуться к настройке параметров установщика, нажав на крестик в правом верхнем углу окна.
 
@@ -65,10 +67,22 @@ ssh <Имя пользователя>@<имя хоста>.local
 ### 2.2 Настройка I2C-портов
 Для дальнейшей корректной работы образовательного робота нужно провести настройку портов для передачи данных по протоколу I2C:
 1. Ввести команду ```sudo raspi-config```. В открытом окне выбрать третий пункт (**3 Interface Options**).
+![Image_15](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Images/003-1-15.png)
+
 2. При помощи клавиш-стрелок выбрать **Select** , открывается подробные настройки интерфейса.
+![Image_16](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Images/003-1-16.png)
+
 3. Выбрать пятый пункт (**I5 I2C**).
+![Image_17](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Images/003-1-17.png)
+
 4. Выбрать **Select**, **Yes**, **OK**.
+![Image_18](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Images/003-1-18.png)
+![Image_19](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Images/003-1-19.png)
+![Image_20](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Images/003-1-20.png)
+
 Итог - порты для корректной работы I2C запущены. Необходимо выйти из настроек, выбрав **Finish**.
+![Image_21](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Images/003-1-21.png)
+
 
 _https://www.raspberrypi.com/documentation/computers/configuration.html_
 
