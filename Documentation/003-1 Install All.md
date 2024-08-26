@@ -118,6 +118,7 @@ for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do
     sudo docker run hello-world
     ```
     Эта команда загружает тестовое изображение и запускает его в контейнере. Когда контейнер запускается, он выводит сообщение с подтверждением и завершает работу.
+    ![Image_22](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Images/003-1-22.png)
 
 _https://docs.docker.com/engine/install/debian/_
 
