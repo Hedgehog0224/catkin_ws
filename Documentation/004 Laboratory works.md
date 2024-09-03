@@ -26,10 +26,12 @@
     - __https://wiki.ros.org/ROS/Tutorials__.
     - __https://robocraft.ru/robotics#ROS__
 4. SSH-соединение;
-5. *Как написать свою собственную Ноду?*;
+5. ~~*Как написать свою собственную Ноду?*~~;
+    - __https://wiki.ros.org/rospy_tutorials/Tutorials/WritingPublisherSubscriber__;
 6. ???
 
 ============================================================================================
 Черновой список приложений:
 1. *Приложение - доп. информация о Raspberry Pi (библиотеки, конфигурация - ```sudo raspi-config```)*;
+    - __https://www.raspberrypi.com/documentation/computers/configuration.html__;
 2. ???
