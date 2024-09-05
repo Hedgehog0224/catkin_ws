@@ -31,37 +31,34 @@ class startServs():
     # rospy.Subscriber("Mode", xy, self.callback_mode)
 
   def move(self):
-   for i in range(180):
+   # for i in range(180):
        #rospy.loginfo(i)
-       self.servo12.angle = i
-       self.servo13.angle = i
-       self.servo14.angle = i
-       self.servo15.angle = i
-       time.sleep(0.05)
+  self.servo15.angle = 40
+   #     time.sleep(0.05)
 
-   for i in range(26):
-       self.servo14.angle = 180-i*5
-       time.sleep(0.1)
+   # for i in range(26):
+   #     self.servo14.angle = 180-i*5
+   #     time.sleep(0.1)
      
-   for i in range(36):
-       self.servo15.angle = 180-i*5
-       time.sleep(0.1)
+   # for i in range(36):
+   #     self.servo15.angle = 180-i*5
+   #     time.sleep(0.1)
      
-   for i in range(36):
-       self.servo15.angle = i*5
-       time.sleep(0.1)
+   # for i in range(36):
+   #     self.servo15.angle = i*5
+   #     time.sleep(0.1)
      
-   for i in range(26):
-       self.servo14.angle = 50+i*5
-       time.sleep(0.1)
+   # for i in range(26):
+   #     self.servo14.angle = 50+i*5
+   #     time.sleep(0.1)
      
-   for i in range(180):
-       #rospy.loginfo(i)
-       self.servo12.angle = 180-i
-       self.servo13.angle = 180-i
-       self.servo14.angle = 180-i
-       self.servo15.angle = 180-i
-       time.sleep(0.05)
+   # for i in range(180):
+   #     #rospy.loginfo(i)
+   #     self.servo12.angle = 180-i
+   #     self.servo13.angle = 180-i
+   #     self.servo14.angle = 180-i
+   #     self.servo15.angle = 180-i
+   #     time.sleep(0.05)
 
 #    self.servo13.angle = 120
 #    self.servo14.angle = 120
