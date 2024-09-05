@@ -7,6 +7,8 @@ from adafruit_motor import servo
 import time
 import rospy
 from robot_pkg.msg import servodata, xy
+from sensor_msgs.msg import Joy 
+
 
 class startServs():
   def __init__(self):
@@ -19,50 +21,63 @@ class startServs():
 #    servo1 = GPIO.PWM(13, 100) # pin, FREQUENCY
     self.i2c = board.I2C()  # uses board.SCL and board.SDA
     self.pca = PCA9685(self.i2c)
-    self.pca.frequency = 100
-    self.servo12 = servo.Servo(self.pca.channels[12], actuation_range = 180, min_pulse = 750, max_pulse=2250)
-    self.servo13 = servo.Servo(self.pca.channels[13], actuation_range = 180, min_pulse = 750, max_pulse=2250)
-    self.servo14 = servo.Servo(self.pca.channels[14], actuation_range = 180, min_pulse = 750, max_pulse=2250)
-    self.servo15 = servo.Servo(self.pca.channels[15], actuation_range = 180, min_pulse = 750, max_pulse=2250)
+    self.pca.frequency = 100   
+    startServs.servo10 = servo.Servo(self.pca.channels[10], actuation_range = 180, min_pulse = 750, max_pulse=2250)
+    startServs.servo11 = servo.Servo(self.pca.channels[11], actuation_range = 180, min_pulse = 750, max_pulse=2250)
+    startServs.servo12 = servo.Servo(self.pca.channels[12], actuation_range = 180, min_pulse = 750, max_pulse=2250)
+    startServs.servo13 = servo.Servo(self.pca.channels[13], actuation_range = 180, min_pulse = 750, max_pulse=2250)
+    startServs.servo14 = servo.Servo(self.pca.channels[14], actuation_range = 180, min_pulse = 750, max_pulse=2250)
+    startServs.servo15 = servo.Servo(self.pca.channels[15], actuation_range = 180, min_pulse = 750, max_pulse=2250)
 
     rospy.init_node('Servos')
     # self.pubServ = rospy.Publisher('Servs', servodata, queue_size=10)
     # self.srvData = servodata()
     # rospy.Subscriber("Mode", xy, self.callback_mode)
 
-  def move(self):
-   # for i in range(180):
-       #rospy.loginfo(i)
-    self.servo15.angle = 40
-   #     time.sleep(0.05)
+    rospy.Subscriber("joy", Joy, self.callback_joy)
+  @staticmethod
+  def callback_joy(data):
+    print(data)
+    Y=[1,0]
+    B=[1,0]
+    A=[1,0]
+    X=[1,0]
+    angls = [90,90,90,90,90,90]
+    if data.buttons[4] == 1:
+      ToggleY = Y[ToggleY]
+      ToggleB = 0
+      ToggleA = 0
+      ToggleX = 0
 
-   # for i in range(26):
-   #     self.servo14.angle = 180-i*5
-   #     time.sleep(0.1)
-     
-   # for i in range(36):
-   #     self.servo15.angle = 180-i*5
-   #     time.sleep(0.1)
-     
-   # for i in range(36):
-   #     self.servo15.angle = i*5
-   #     time.sleep(0.1)
-     
-   # for i in range(26):
-   #     self.servo14.angle = 50+i*5
-   #     time.sleep(0.1)
-     
-   # for i in range(180):
-   #     #rospy.loginfo(i)
-   #     self.servo12.angle = 180-i
-   #     self.servo13.angle = 180-i
-   #     self.servo14.angle = 180-i
-   #     self.servo15.angle = 180-i
-   #     time.sleep(0.05)
+    if data.buttons[5] == 1:
+      ToggleB = B[ToggleB]
+      ToggleA = 0
+      ToggleX = 0
+      ToggleY = 0
 
-#    self.servo13.angle = 120
-#    self.servo14.angle = 120
-#    self.servo15.angle = 120
+    if data.buttons[6] == 1:
+      ToggleA = A[ToggleA]
+      ToggleB = 0
+      ToggleX = 0
+      ToggleY = 0
+#huj
+    if data.buttons[7] == 1:
+      ToggleX = X[ToggleX]
+      ToggleB = 0
+      ToggleA = 0
+      ToggleY = 0
+
+    if data.axes[0] > 0:
+      s
+
+    if ToggleA:
+      startServs.servo10 = data.axes[0]
+    if ToggleA:
+      startServs.servo10 = data.axes[0]
+    if ToggleA:
+      startServs.servo10 = data.axes[0]
+    if ToggleA:
+      startServs.servo10 = data.axes[0]
 
   def publis2topic(self):
     self.srvData.servo0 = 0
@@ -78,3 +93,4 @@ class startServs():
     pass
 Ob = startServs()
 Ob.move()
+rospy.spin()
