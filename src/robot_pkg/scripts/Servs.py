@@ -33,7 +33,7 @@ class startServs():
   def move(self):
    # for i in range(180):
        #rospy.loginfo(i)
-  self.servo15.angle = 40
+    self.servo15.angle = 40
    #     time.sleep(0.05)
 
    # for i in range(26):
