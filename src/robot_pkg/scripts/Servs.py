@@ -11,6 +11,7 @@ from sensor_msgs.msg import Joy
 
 
 class startServs():
+  angls = [0,90,90,90,90,90,90]
   def __init__(self):
 #    WORK_TIME = 10
 #    DUTY_CYCLE = 50
@@ -42,33 +43,38 @@ class startServs():
     B=[1,0]
     A=[1,0]
     X=[1,0]
-    angls = [90,90,90,90,90,90]
     if data.buttons[4] == 1:
       ToggleY = Y[ToggleY]
+      startServs.angls[0] = 1
       ToggleB = 0
       ToggleA = 0
       ToggleX = 0
-
     if data.buttons[5] == 1:
       ToggleB = B[ToggleB]
+      startServs.angls[0] = 2
       ToggleA = 0
       ToggleX = 0
       ToggleY = 0
 
     if data.buttons[6] == 1:
       ToggleA = A[ToggleA]
+      startServs.angls[0] = 3
       ToggleB = 0
       ToggleX = 0
       ToggleY = 0
 #huj
     if data.buttons[7] == 1:
       ToggleX = X[ToggleX]
+      startServs.angls[0] = 4
       ToggleB = 0
       ToggleA = 0
       ToggleY = 0
 
-    if data.axes[0] > 0:
-      s
+    if startServs.angls[startServs.angls[0]] > 20 and startServs.angls[startServs.angls[0]] < 160:
+      if data.axes[0] < 0:
+        startServs.angls[startServs.angls[0]] = startServs.angls[startServs.angls[0]] - 10
+      if data.axes[0] > 0:
+        startServs.angls[startServs.angls[0]] = startServs.angls[startServs.angls[0]] + 10
 
     if ToggleA:
       startServs.servo10 = data.axes[0]
