@@ -31,14 +31,18 @@ class startServs():
   def callback_joy(data):
     # print(data)
     #huj
-    if data.buttons[4] == 1:
+    if data.buttons[1] == 1:
       startServs.angls[0] = 1
-    if data.buttons[5] == 1:
+    if data.buttons[2] == 1:
       startServs.angls[0] = 2
-    if data.buttons[6] == 1:
+    if data.buttons[3] == 1:
       startServs.angls[0] = 3
-    if data.buttons[7] == 1:
+    if data.buttons[4] == 1:
       startServs.angls[0] = 4
+    if data.buttons[5] == 1:
+      startServs.angls[0] = 5
+    if data.buttons[6] == 1:
+      startServs.angls[0] = 6
 
     if startServs.angls[startServs.angls[0]] > 20 and startServs.angls[startServs.angls[0]] < 160:
       if data.axes[0] < 0:
