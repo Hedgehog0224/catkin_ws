@@ -49,7 +49,7 @@ class startServs():
         startServs.angls[startServs.angls[0]] = startServs.angls[startServs.angls[0]] - 10
       if data.axes[0] > 0:
         startServs.angls[startServs.angls[0]] = startServs.angls[startServs.angls[0]] + 10
-  for i in range(len(startServs)-1):
+  for i in range(len(startServs.angls)-1):
     startServs.ArrOfServs[i] = startServs.angls[i+1]
   
   def publis2topic(self):
