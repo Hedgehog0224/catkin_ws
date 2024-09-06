@@ -59,15 +59,16 @@ class robotcl():
             rospy.loginfo_throttle(20, 'The mode in which the robot does not drive is selected: %s', robotcl.mode)
             
         elif robotcl.mode == 3:
-            for i in range(2):
-                robotcl.abcd.move([-1, -1, -1, -1], [0, 0, 0, 0], robotcl.I2Cpins)
-                sleep(1)
-                robotcl.abcd.move([1, 1, 1, 1], [0, 0, 0, 0], robotcl.I2Cpins)
-                sleep(1)
-                rospy.loginfo_throttle(20, 'This is the user mode: %s', robotcl.mode)
+            pass
+            # for i in range(2):
+                # robotcl.abcd.move([-1, -1, -1, -1], [0, 0, 0, 0], robotcl.I2Cpins)
+                # sleep(1)
+                # robotcl.abcd.move([1, 1, 1, 1], [0, 0, 0, 0], robotcl.I2Cpins)
+                # sleep(1)
+                # rospy.loginfo_throttle(20, 'This is the user mode: %s', robotcl.mode)
 
         elif robotcl.mode == 2:
-            stTime = time()
+            # stTime = time()
             new_data = data.ranges[0:int(len(data.ranges)*0.4)] + data.ranges[int(len(data.ranges)*0.6):int(len(data.ranges))]
             size_nd = len(new_data)
             temp = min(new_data)
@@ -97,8 +98,8 @@ class robotcl():
                 #abcd.move([1,1,0,0], [0,0,0,0])
                 # rospy.loginfo(ArrForMove)
                 robotcl.PredArrForMove = ArrForMove
-                workTime = time() - stTime
-                rospy.loginfo("Time work: %s", workTime)
+                # workTime = time() - stTime
+                # rospy.loginfo("Time work: %s", workTime)
         else:            
             JoyArr = robotcl.abcd.set_speed(robotcl.JoySpeed[0], robotcl.JoySpeed[1], turnOsSys=45, ModeOfAngles = 1, FuncOfAngel = [0, -robotcl.JoyAngle])
             if ((abs(JoyArr[0])<0.05) and (abs(JoyArr[1])<0.05) and (abs(JoyArr[2])<0.05) and (abs(JoyArr[3])<0.05)):
