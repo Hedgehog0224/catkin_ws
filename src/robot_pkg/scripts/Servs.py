@@ -16,13 +16,12 @@ class startServs():
     self.i2c = board.I2C()  # uses board.SCL and board.SDA
     self.pca = PCA9685(self.i2c)
     self.pca.frequency = 100
-    startServs.ArrOfServs = []
-    startServs.ArrOfServs.append(servo.Servo(self.pca.channels[10], actuation_range = 180, min_pulse = 750, max_pulse=2250))
-    startServs.ArrOfServs.append(servo.Servo(self.pca.channels[10], actuation_range = 180, min_pulse = 750, max_pulse=2250))
-    startServs.ArrOfServs.append(servo.Servo(self.pca.channels[10], actuation_range = 180, min_pulse = 750, max_pulse=2250))
-    startServs.ArrOfServs.append(servo.Servo(self.pca.channels[10], actuation_range = 180, min_pulse = 750, max_pulse=2250))
-    startServs.ArrOfServs.append(servo.Servo(self.pca.channels[10], actuation_range = 180, min_pulse = 750, max_pulse=2250))
-    startServs.ArrOfServs.append(servo.Servo(self.pca.channels[10], actuation_range = 180, min_pulse = 750, max_pulse=2250))
+    startServs.servo10 = servo.Servo(self.pca.channels[10], actuation_range = 180, min_pulse = 750, max_pulse=2250)
+    startServs.servo11 = servo.Servo(self.pca.channels[10], actuation_range = 180, min_pulse = 750, max_pulse=2250)
+    startServs.servo12 = servo.Servo(self.pca.channels[10], actuation_range = 180, min_pulse = 750, max_pulse=2250)
+    startServs.servo13 = servo.Servo(self.pca.channels[10], actuation_range = 180, min_pulse = 750, max_pulse=2250)
+    startServs.servo14 = servo.Servo(self.pca.channels[10], actuation_range = 180, min_pulse = 750, max_pulse=2250)
+    startServs.servo15 = servo.Servo(self.pca.channels[10], actuation_range = 180, min_pulse = 750, max_pulse=2250)
     
     rospy.init_node('Servos')
 
@@ -49,8 +48,12 @@ class startServs():
         startServs.angls[startServs.angls[0]] = startServs.angls[startServs.angls[0]] - 10
       if data.axes[0] > 0:
         startServs.angls[startServs.angls[0]] = startServs.angls[startServs.angls[0]] + 10
-    for i in range(len(startServs.angls)-1):
-      startServs.ArrOfServs[i] = startServs.angls[i+1]
+    startServs.servo10 = startServs.angls[1]
+    startServs.servo11 = startServs.angls[2]
+    startServs.servo12 = startServs.angls[3]
+    startServs.servo13 = startServs.angls[4]
+    startServs.servo14 = startServs.angls[5]
+    startServs.servo15 = startServs.angls[6]
   
   def publis2topic(self):
     self.srvData.servo0 = self.servo10.angle
@@ -65,5 +68,5 @@ class startServs():
   def callback_mode(data):
     pass
 Ob = startServs()
-Ob.move()
+# Ob.move()
 rospy.spin()
