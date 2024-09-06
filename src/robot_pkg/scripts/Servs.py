@@ -43,9 +43,9 @@ class startServs():
       startServs.angls[0] = 6
 
     if data.axes[0] < 0 and startServs.angls[startServs.angls[0]] > 20:
-      startServs.angls[startServs.angls[0]] = startServs.angls[startServs.angls[0]] - 10
+      startServs.angls[startServs.angls[0]] = startServs.angls[startServs.angls[0]] - 2
     if data.axes[0] > 0 and startServs.angls[startServs.angls[0]] < 160:
-      startServs.angls[startServs.angls[0]] = startServs.angls[startServs.angls[0]] + 10
+      startServs.angls[startServs.angls[0]] = startServs.angls[startServs.angls[0]] + 2
     
     startServs.servo10.angle = startServs.angls[1]
     startServs.servo11.angle = startServs.angls[2]
