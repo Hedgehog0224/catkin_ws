@@ -1,6 +1,7 @@
 from numpy import arange, deg2rad, round, array
 from math import sin, cos, atan
 from random import random
+from typing import Tuple
 
 import RPi.GPIO as GPIO
 import board
@@ -8,56 +9,67 @@ from adafruit_pca9685 import PCA9685
 
 from rospy import logerr, loginfo, logwarn
 
+
 class Motor():
-    # === Инициализация ===
-    def __init__(self, x_multi, y_multi):
+    def __init__(self, x_multi, y_multi) -> None:
         GPIO.setwarnings(False)
         if GPIO.getmode() == None:
             GPIO.setmode(GPIO.BOARD)  
         
-        self.L = 19.09 # Длинна от центра до колеса
-        self.speed = 0 # Скорость вращения колеса
-        self.speed_shim = 0 # Скорость вращения колеса (пересчёт для контроллера)
-        self.x_multi = x_multi # Множитель по x
-        self.y_multi = y_multi # Множитель по y
-        
-    #  === Вычесления ===
-    def _single_front_potate(self, V, fid):
-        # Расчёт скорости колеса (экземпляра) из скоростей (x, y)
+        self.L = 19.09            # Расстояние от центра до колеса
+        self.speed = 0            # Скорость вращения колеса
+        self.speed_shim = 0       # Скорость вращения колеса (пересчёт для контроллера)
+        self.x_multi = x_multi    # Множитель по x
+        self.y_multi = y_multi    # Множитель по y
+
+    def _single_front_potate(self, V, fid) -> None:
+        ```
+        Вычисление скорости колеса (экземпляра) из скоростей (x, y)
+        ```
         self.speed =  self.x_multi*V[0] + self.y_multi*V[1] + fid
 
-    def set_speed_shim(self, newSpeed):
+    def set_speed_shim(self, newSpeed) -> None:
+        ```
+        Установка скорости вращения колеса для ШИМ-а
+        ```
         self.speed_shim = newSpeed
-    
+
+
 class Route(Motor):
-    # === Инициализация ===
-    def __init__(self, a, b, c, d):
-        self.ListOfMotors = [a, b, c, d] # Список экземпляров класса Motor
-        self.xy_speeds = [0, 0] # Скорости (x, y) для всего робота
-        self.setUpI2C() # Инициализация пинов I2C
-    
-    def setUpI2C(self):
-        # Инициализация I2C
+    def __init__(self, a, b, c, d) -> None:
+        self.ListOfMotors = [a, b, c, d]    # Список экземпляров класса Motor
+        self.xy_speeds = [0, 0]             # Скорости (x, y) для всего робота
+        self.setUpI2C()                     # Инициализация пинов I2C
+
+    def setUpI2C(self) -> None:
+        ```
+        Инициализация I2C
+        ```
         GPIO.setwarnings(False)
         self.i2c = board.I2C()
         self.pca = PCA9685(self.i2c)
         self.pca.frequency = 100
         self.PredArrForMove = [0,0,0,0]
-        
-    #  === Вычесления ===
-    def _revers_potate(self, FuncOfAngel):
-        # Расчёт скоростей (x, y) из скоростей колёс (a, b, c, d)
+
+    def _revers_potate(self, FuncOfAngel) -> None:
+        ```
+        Расчёт скоростей (x, y) из скоростей колёс (a, b, c, d)
+        ```
         x = (self.ListOfMotors[0] - self.ListOfMotors[2] - 2*Motor.L*FuncOfAngel)*0.5
         y = (self.ListOfMotors[1] - self.ListOfMotors[3] - 2*Motor.L*FuncOfAngel)*0.5
         self.xy_speeds = [x, y]
 
-    def _front_potate(self, ModeOfAngles, FuncOfAngel):
-        # Расчёт скоростей колёс (экземпляров) из скоростей (x, y)
+    def _front_potate(self, ModeOfAngles, FuncOfAngel -> None):
+        ```
+        Расчёт скоростей колёс (экземпляров) из скоростей (x, y)
+        ```
         for i in self.ListOfMotors:
             i._single_front_potate(self.xy_speeds, self.__differencial(ModeOfAngles, FuncOfAngel))
 
-    def set_speed(self, *args, ModeOfAngles = 0, FuncOfAngel = 0, turnOsSys = 0):
-        # Расчёт скорости колеса (экземпляра) из скоростей (x, y)
+    def set_speed(self, *args, ModeOfAngles = 0, FuncOfAngel = 0, turnOsSys = 0) -> list:
+        ```
+        Расчёт скорости колеса (экземпляра) из скоростей (x, y)
+        ```
         if turnOsSys:
             # Пересчёт скоростей (x, y), если нужен поворот оси
             args = self.potateOfSys(args[0],args[1],deg2rad(turnOsSys))
@@ -69,15 +81,19 @@ class Route(Motor):
         return(self.getAllMotorsSpeeds())
 
     def getAllMotorsSpeeds(self) -> list:
-        # Возвращает массив скоростей колёс
+        ```
+        Возвращает массив скоростей колёс
+        ```
         res = []
         for i in self.ListOfMotors:
             res.append(round(i.speed, 2))
         return(res)
 
     @staticmethod
-    # Статичный метод для численного диференцирования (для поворота)
-    def __differencial(mode, args):
+    def __differencial(mode, args) -> float:
+        ```
+        Статичный метод для численного диференцирования (для поворота)
+        ```
         if not mode:
             return 0
         else:
@@ -85,8 +101,10 @@ class Route(Motor):
         return dif
     
     @staticmethod
-    # Статичный метод для вращения точек (a,b) на угол alfa
-    def potateOfSys(a,b,alfa):
+    def potateOfSys(a,b,alfa) -> list:
+        ```
+        Статичный метод для вращения точек (a,b) на угол alfa
+        ```
         pole_phi =0
         if a and b:
             pole_phi = atan(b/a)
@@ -106,7 +124,12 @@ class Route(Motor):
         yr = round(pole_len*sin(pole_phi+alfa), 2)
         return([xr, yr])
             
-    def move(self, SpeedsMotors, preSpeedsMotors, numsPins):
+    def move(self, SpeedsMotors, preSpeedsMotors, numsPins) -> None:
+        ```
+        Поиск максимальной скорости.
+        Перерасчёт  остальных под единицу.
+        Передача скоростей на моторы.
+        ```
         # logwarn("Speeds: %s; PreSpeed: %s", SpeedsMotors, preSpeedsMotors)
         # Передача скоростей моторам
         maxSpeed = max(max(SpeedsMotors), abs(min(SpeedsMotors)))
@@ -137,8 +160,12 @@ class Route(Motor):
         self.pca.channels[numsPins[10]].duty_cycle = int(SpeedsMotors[3] > 0)*65535
         self.pca.channels[numsPins[11]].duty_cycle = int(SpeedsMotors[3] < 0)*65535        
 
-# Тестовая часть программы
-def main():
+
+def main() -> None:
+    ```
+    Тестовая часть программы.
+    Проверка работоспособности методов
+    ```
     A = Motor(1,   0)
     B = Motor(0,   1)
     C = Motor(-1,  0)
