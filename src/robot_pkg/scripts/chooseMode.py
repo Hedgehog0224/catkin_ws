@@ -3,6 +3,7 @@ import rospy
 from robot_pkg.msg import xy
 from sensor_msgs.msg import Joy
 
+
 class chooseModeClass():
   pubMode = rospy.Publisher('Mode', xy, queue_size=10)
   rospy.init_node('chooseMode')
@@ -14,7 +15,10 @@ class chooseModeClass():
     rospy.Subscriber("joy", Joy, self.callback_joy)
     
   @staticmethod
-  def callback_joy(data):
+  def callback_joy(data) -> None:
+    ```
+    Приём данных с джойстика
+    ```
     #print(data.axes)
     #print(data.buttons)
     if data.axes[2] + data.axes[5] < -1.9:
@@ -28,6 +32,7 @@ class chooseModeClass():
     chooseModeClass.msg.y = -data.axes[3]
     chooseModeClass.msg.angle = data.axes[0]
     chooseModeClass.pubMode.publish(chooseModeClass.msg)
+
 
 robot = chooseModeClass()
 rospy.sleep(0.05)
