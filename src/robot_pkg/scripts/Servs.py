@@ -71,7 +71,7 @@ class startServs():
     startServs.pubServ.publish(startServs.srvData)
 
   @staticmethod
-  def callback_mode(data):
+  def callback_mode(data) -> None:
     pass
 
 
