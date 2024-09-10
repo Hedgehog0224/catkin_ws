@@ -11,7 +11,7 @@ from sensor_msgs.msg import Joy
 
 
 class startServs():
-  angls = [0,90,90,90,90,90,90]
+  angls = [0,90,90,90,90,90,90]    # Первый элемент - выбранный сервопривод. Остальные - углы сервоприводов.
   def __init__(self):
     startServs.i2c = board.I2C()  # uses board.SCL and board.SDA
     startServs.pca = PCA9685(startServs.i2c)
@@ -26,7 +26,10 @@ class startServs():
     rospy.Subscriber("joy", Joy, self.callback_joy)
     
   @staticmethod
-  def callback_joy(data):
+  def callback_joy(data) -> None:
+    ```
+    Получение данных с джойстика, их обработка
+    ```
     print(startServs.angls)
     #huj
     if data.buttons[0] == 1:
@@ -55,7 +58,10 @@ class startServs():
     startServs.servo15.angle = startServs.angls[6]
 
   @staticmethod
-  def publis2topic():
+  def publis2topic() -> None:
+    ```
+    Публикация в топик
+    ```
     startServs.srvData.servo0 = startServs.servo10.angle
     startServs.srvData.servo1 = startServs.servo11.angle
     startServs.srvData.servo2 = startServs.servo12.angle
@@ -67,6 +73,8 @@ class startServs():
   @staticmethod
   def callback_mode(data):
     pass
+
+
 Ob = startServs()
 # Ob.move()
 rospy.spin()
