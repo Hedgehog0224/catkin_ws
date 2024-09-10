@@ -59,7 +59,7 @@ class Route(Motor):
         y = (self.ListOfMotors[1] - self.ListOfMotors[3] - 2*Motor.L*FuncOfAngel)*0.5
         self.xy_speeds = [x, y]
 
-    def _front_potate(self, ModeOfAngles, FuncOfAngel -> None):
+    def _front_potate(self, ModeOfAngles, FuncOfAngel) -> None:
         ```
         Расчёт скоростей колёс (экземпляров) из скоростей (x, y)
         ```
