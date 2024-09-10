@@ -4,8 +4,12 @@ from std_msgs.msg import Float32
 import RPi.GPIO as GPIO
 import time
 
+
 # class MakeUltrasonic():
-def setUpPins(InPin, OutPin):
+def setUpPins(InPin, OutPin) -> None:
+    ```
+    Настройка пинов распы для корректной работы
+    ```
     if GPIO.getmode() == None:
         GPIO.setmode(GPIO.BOARD)
     inputPin = InPin # connect to echo via 1K resistor
@@ -18,7 +22,10 @@ def setUpPins(InPin, OutPin):
     time.sleep(0.00001)
     GPIO.output(outputPin,False)
 
-def ultrasonic_detection(inputPin, outputPin, pub):
+def ultrasonic_detection(inputPin, outputPin, pub) -> None:
+    ```
+    Расчёт расстояния из времени, полученного от ультразвукового датчика
+    ```
     setUpPins(inputPin, outputPin)
         
     while GPIO.input(inputPin) == 0:
@@ -33,7 +40,10 @@ def ultrasonic_detection(inputPin, outputPin, pub):
     # if chPrint: print("Distance is", distance, "cm")
     GPIO.cleanup()
 
-def start():
+def start() -> None:
+    ```
+    Публикация дистанции в топик distance
+    ```
     # rospy.init_node('ultrasonic')
     pub = rospy.Publisher('distance', Float32, queue_size=10)
     while not rospy.is_shutdown():    
