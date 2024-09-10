@@ -11,7 +11,7 @@ from rospy import logerr, loginfo, logwarn
 
 
 class Motor():
-    def __init__(self, x_multi, y_multi) -> None:
+    def __init__(self, x_multi, y_multi):
         GPIO.setwarnings(False)
         if GPIO.getmode() == None:
             GPIO.setmode(GPIO.BOARD)  
