@@ -2,9 +2,9 @@ import rospy
 from sensor_msgs.msg import Joy
 
 def callback_joy(data) -> None:
-  ```
+  """
   Вывод данных с джойстика в терминал для тестирования кнопок (вывода данных)
-  ```
+  """
   print(data.axes)
   print(data.buttons)
 
