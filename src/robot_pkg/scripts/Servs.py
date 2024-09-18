@@ -27,9 +27,9 @@ class startServs():
     
   @staticmethod
   def callback_joy(data) -> None:
-    ```
+    """
     Получение данных с джойстика, их обработка
-    ```
+    """
     print(startServs.angls)
     #huj
     if data.buttons[0] == 1:
@@ -59,9 +59,9 @@ class startServs():
 
   @staticmethod
   def publis2topic() -> None:
-    ```
+    """
     Публикация в топик
-    ```
+    """
     startServs.srvData.servo0 = startServs.servo10.angle
     startServs.srvData.servo1 = startServs.servo11.angle
     startServs.srvData.servo2 = startServs.servo12.angle
