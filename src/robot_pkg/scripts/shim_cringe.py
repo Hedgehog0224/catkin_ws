@@ -42,9 +42,9 @@ class robotcl():
     abcd = Route(A, B, C, D)
 
     def __init__(self):
-        ```
+        """
         Инициализация нод и подписчиков
-        ```
+        """
         rospy.init_node('MainNodeForRobot')
         rospy.Subscriber("scan", LaserScan, self.callback_scan)
         rospy.Subscriber("distance", Float32, self.callback_ultra_zd)
@@ -52,9 +52,9 @@ class robotcl():
     
     @staticmethod
     def callback_scan(data) -> None:
-        ```
+        """
         Функция обратной связи лидара и обработка данных с джойстика
-        ```
+        """
         if robotcl.varStopAll:
             robotcl.abcd.move(robotcl.abcd.set_speed(1, 1), [0, 0, 0, 0], robotcl.I2Cpins)
 
@@ -117,9 +117,9 @@ class robotcl():
     
     @staticmethod
     def callback_ultra_zd(data) -> None:
-        ```
+        """
         Обратная связь дальномера
-        ```
+        """
         dataFloat = float(str(data)[6:-1])
         if dataFloat < 20.0:
             rospy.loginfo('Attention an obstacle has been detected (cm): %s', round(dataFloat,2))
@@ -129,9 +129,9 @@ class robotcl():
     
     @staticmethod
     def callback_mode(data) -> None:
-        ```
+        """
         Обратная связь джойстика
-        ```
+        """
         robotcl.mode = data.mode
         robotcl.JoySpeed = [data.x, data.y]
         robotcl.JoyAngle = data.angle
