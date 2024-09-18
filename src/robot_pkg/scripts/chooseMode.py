@@ -16,9 +16,9 @@ class chooseModeClass():
     
   @staticmethod
   def callback_joy(data) -> None:
-    ```
+    """
     Приём данных с джойстика
-    ```
+    """
     #print(data.axes)
     #print(data.buttons)
     if data.axes[2] + data.axes[5] < -1.9:
