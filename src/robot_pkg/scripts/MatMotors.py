@@ -23,15 +23,15 @@ class Motor():
         self.y_multi = y_multi    # Множитель по y
 
     def _single_front_potate(self, V, fid) -> None:
-        ```
+        """
         Вычисление скорости колеса (экземпляра) из скоростей (x, y)
-        ```
+        """
         self.speed =  self.x_multi*V[0] + self.y_multi*V[1] + fid
 
     def set_speed_shim(self, newSpeed) -> None:
-        ```
+        """
         Установка скорости вращения колеса для ШИМ-а
-        ```
+        """
         self.speed_shim = newSpeed
 
 
@@ -42,9 +42,9 @@ class Route(Motor):
         self.setUpI2C()                     # Инициализация пинов I2C
 
     def setUpI2C(self) -> None:
-        ```
+        """
         Инициализация I2C
-        ```
+        """
         GPIO.setwarnings(False)
         self.i2c = board.I2C()
         self.pca = PCA9685(self.i2c)
@@ -52,24 +52,24 @@ class Route(Motor):
         self.PredArrForMove = [0,0,0,0]
 
     def _revers_potate(self, FuncOfAngel) -> None:
-        ```
+        """
         Расчёт скоростей (x, y) из скоростей колёс (a, b, c, d)
-        ```
+        """
         x = (self.ListOfMotors[0] - self.ListOfMotors[2] - 2*Motor.L*FuncOfAngel)*0.5
         y = (self.ListOfMotors[1] - self.ListOfMotors[3] - 2*Motor.L*FuncOfAngel)*0.5
         self.xy_speeds = [x, y]
 
     def _front_potate(self, ModeOfAngles, FuncOfAngel) -> None:
-        ```
+        """
         Расчёт скоростей колёс (экземпляров) из скоростей (x, y)
-        ```
+        """
         for i in self.ListOfMotors:
             i._single_front_potate(self.xy_speeds, self.__differencial(ModeOfAngles, FuncOfAngel))
 
     def set_speed(self, *args, ModeOfAngles = 0, FuncOfAngel = 0, turnOsSys = 0) -> list:
-        ```
+        """
         Расчёт скорости колеса (экземпляра) из скоростей (x, y)
-        ```
+        """
         if turnOsSys:
             # Пересчёт скоростей (x, y), если нужен поворот оси
             args = self.potateOfSys(args[0],args[1],deg2rad(turnOsSys))
@@ -81,9 +81,9 @@ class Route(Motor):
         return(self.getAllMotorsSpeeds())
 
     def getAllMotorsSpeeds(self) -> list:
-        ```
+        """
         Возвращает массив скоростей колёс
-        ```
+        """
         res = []
         for i in self.ListOfMotors:
             res.append(round(i.speed, 2))
@@ -91,9 +91,9 @@ class Route(Motor):
 
     @staticmethod
     def __differencial(mode, args) -> float:
-        ```
+        """
         Статичный метод для численного диференцирования (для поворота)
-        ```
+        """
         if not mode:
             return 0
         else:
@@ -102,9 +102,9 @@ class Route(Motor):
     
     @staticmethod
     def potateOfSys(a,b,alfa) -> list:
-        ```
+        """
         Статичный метод для вращения точек (a,b) на угол alfa
-        ```
+        """
         pole_phi =0
         if a and b:
             pole_phi = atan(b/a)
@@ -125,11 +125,11 @@ class Route(Motor):
         return([xr, yr])
             
     def move(self, SpeedsMotors, preSpeedsMotors, numsPins) -> None:
-        ```
+        """
         Поиск максимальной скорости.
         Перерасчёт  остальных под единицу.
         Передача скоростей на моторы.
-        ```
+        """
         # logwarn("Speeds: %s; PreSpeed: %s", SpeedsMotors, preSpeedsMotors)
         # Передача скоростей моторам
         maxSpeed = max(max(SpeedsMotors), abs(min(SpeedsMotors)))
@@ -162,10 +162,10 @@ class Route(Motor):
 
 
 def main() -> None:
-    ```
+    """
     Тестовая часть программы.
     Проверка работоспособности методов
-    ```
+    """
     A = Motor(1,   0)
     B = Motor(0,   1)
     C = Motor(-1,  0)
