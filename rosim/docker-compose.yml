@@ -1,0 +1,14 @@
+services:
+  ros:
+    image: ros147
+    network_mode: host
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /home/kev/ros:/home/ros
+    devices:
+      - /dev/video1:/dev/video1
+      - /dev/video0:/dev/video0
+      - /dev/ttyUSB0:/dev/ttyUSB0
+    tty: true
+    environment:
+      - DISPLAY
