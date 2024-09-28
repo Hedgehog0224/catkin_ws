@@ -16,7 +16,7 @@
 
 *Выделенные курсивом не используются в роботе изначально.*
 
-![Image_1](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Images/003-5-1.jpg)
+![Image_1](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Images/Folder-3-5/003-5-1.jpg)
 ### Изображение 1 - Наименование кнопок джойстика (003-5-1.jpg)
 
 Издатель-нода **choseMode** получает данные от джойстика, публикует сообщения типа **xy** в топик **Mode** (т.е., только те данные, которые указаны в **xy.msg**) в виде параметров объектов класса **chooseModeClass.msg.x**, **chooseModeClass.msg.y**, **chooseModeClass.msg.anlge**, **chooseModeClass.msg.mode**.\
