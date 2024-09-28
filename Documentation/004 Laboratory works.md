@@ -13,7 +13,7 @@
 
 ============================================================================================
 Черновой список планируемых учебных разделов:
-1. ~~Начало работы с Linux (основные команды, принцип работы)~~;
+1. `Начало работы с Linux (основные команды, принцип работы)`;
     - __http://learn.voltbro.ru/free/ros-intro/lesson1-linux-intro/about_linux.html__;
     - __https://docs.altlinux.org/ru-RU/archive/2.4/html-single/master/alt-docs-extras-linuxcovice/index.html__;
     - команды:
@@ -26,8 +26,8 @@
     - __http://docs.voltbro.ru/starting-ros/__;
     - __https://wiki.ros.org/ROS/Tutorials__.
     - __https://robocraft.ru/robotics#ROS__
-4. ~~SSH-соединение (что такое, принцип работы, как пользоваться)~~;
-5. ~~Как написать свою собственную Ноду?~~;
+4. `SSH-соединение (что такое, принцип работы, как пользоваться)`;
+5. `Как написать свою собственную Ноду?`;
     - __https://wiki.ros.org/rospy_tutorials/Tutorials/WritingPublisherSubscriber__;
 6. ???
 
