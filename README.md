@@ -3,14 +3,6 @@
 ![Image_1](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Memes/001.png)
 **Катя может быть RickRoll не обещала, но я же не Катя)**
 
-## Список написанных документов:
-1. **000 Presentation** - Описание и презентация проекта;
-2. **001 Programms** - Список всех программ;
-3. **002 Components** - Список компонентов;
-4. **003 Install All** - Руководство по установке ПО;
-5. **004 Laboratory works** - Список лабораторных работ.
-
-
 ## Special documentation:
 
 1. __https://training.github.com/downloads/ru/github-git-cheat-sheet/__
