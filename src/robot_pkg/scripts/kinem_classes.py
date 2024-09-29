@@ -1,9 +1,14 @@
-from math import pi, cos, sin
-from numpy import zeros, matmul, deg2rad, array, ndarray
+from math import pi, cos, sin, atan2, atan, acos
+from numpy import zeros, matmul, deg2rad, array, ndarray, rad2deg
 from typing import Union, Any, Optional
+from matplotlib.pyplot import plot, show, subplot, figure
+from rospy import loginfo, logwarn, logerr
 
 class data():
-    def __init__(self, a1: Optional [int]=10, s1: Optional [int]=36, l1: Optional [int]=178, l2: Optional [int]=159.8, s4: Optional [int]=10, s5: Optional [int]=135, q=array([0,0,0,0,0])) -> None:
+    def __init__(self, a1: Optional [int]=10,  s1: Optional [int]=36, 
+                       l1: Optional [int]=178, l2: Optional [int]=159.8, 
+                       s4: Optional [int]=10,  s5: Optional [int]=135, 
+                       q=array([0,0,0,0,0]),   l4: Optional [int]=125) -> None:
         """
         Класс для хранения данных о манипуляторе
         """
@@ -14,6 +19,7 @@ class data():
         self.slovar["l2"] = l2
         self.slovar["s4"] = s4
         self.slovar["s5"] = s5
+        self.slovar["l4"] = l4
         self.slovar["q"] = q
         self.slovar["DH"] = self.calculationOfDH(q)
 
@@ -39,7 +45,10 @@ class data():
         return res
 
 class baseCalculations(data):
-    def __init__(self, a1: Optional [int]=10, s1: Optional [int]=36, l1: Optional [int]=178, l2: Optional [int]=159.8, s4: Optional [int]=10, s5: Optional [int]=135, q=array([0,0,0,0,0])) -> None:
+    def __init__(self, a1: Optional [int]=10,  s1: Optional [int]=36, 
+                       l1: Optional [int]=178, l2: Optional [int]=159.8, 
+                       s4: Optional [int]=10,  s5: Optional [int]=135, 
+                       q=array([0,0,0,0,0]),   l4: Optional [int]=125) -> None:
         """
         Класс для базовых вычислений для манипулятора
         """
@@ -83,7 +92,7 @@ class baseCalculations(data):
     
     def calculationOfR(self, mode:int) -> array:
         """
-        Вычисление матрицы вращения
+        Вычисление матрицы вращения (0: Т_0->3, 3: Т_3->0)
         """
         fromT = self.calculationOfT(mode)
         return ([[fromT[0][0], fromT[0][1], fromT[0][2]],
@@ -92,7 +101,7 @@ class baseCalculations(data):
     
     def calculationOfP(self, mode:int) -> array:
         """
-        Вычисление вектора
+        Вычисление вектора (0: Т_0->3, 3: Т_3->0)
         """
         fromT = self.calculationOfT(mode)
         return ([[fromT[0][-1]], [fromT[1][-1]], [fromT[2][-1]]])
@@ -103,13 +112,14 @@ class baseCalculations(data):
         """
         try: return self.T[num]
         except: 
-            print("incorrect data. returned all array <T>:")
+            logwarn("incorrect data. returned all array <T>:")
             return self.T
         
     def EulersAngles(self, angles: list=[0,0,0]):
         """
         Вычисление углов Эйлера
         """
+        # fi, theta, ksi
         R_elera = [
                     # [0]
                     [cos(angles[0])*cos(angles[1])*cos(angles[2]) - sin(angles[0])*sin(angles[2]),
@@ -121,11 +131,39 @@ class baseCalculations(data):
                     sin(angles[0])*sin(angles[1])],
                     # [2]
                     [-sin(angles[1])*cos(angles[2]),
-                    -sin(angles[1])*sin(angles[2]),
+                    sin(angles[1])*sin(angles[2]),
                     cos(angles[1])]
                     ]
         return R_elera
-    
+
+    def anglesFromEuler(self, R: array):
+        """
+        Прямая кинематика (из матрицы однородного преобразования в углы эйлера)
+        """
+        angels = [None,None,None] # fi, theta, ksi
+        match = R[2][2]
+        if match == 1: # 2
+            angels[1] = 0
+            sum = atan2(R[1][0],R[0][0])
+            angels[0] = sum/2
+            angels[2] = sum/2
+        elif match == -1: # 3
+            angels[1] = pi
+            dif = atan2(-R[0][1],-R[0][0])
+            angels[0] = dif/2
+            angels[2] = dif/2
+        else:
+            try:    
+                angels[1] = atan2((1-R[2][2]**2)**0.5, R[2][2])
+                angels[0] = atan2(R[1][2], R[0][2])
+                angels[2] = atan2(R[2][1], -R[2][0])
+            except:
+                angels[1] = atan2(-(1-R[2][2]**2)**0.5, R[2][2])
+                angels[0] = atan2(-R[1][2], -R[0][2])
+                angels[2] = atan2(-R[2][1], R[2][0])
+        return angels
+
+        
     @staticmethod
     def print_array(array: list, numOfRound = 0):
         """
@@ -153,7 +191,7 @@ class baseCalculations(data):
                             print(array[i][j], end=',\t')
                     print("|")
         except:
-            print("vector detected")
+            loginfo("vector detected")
             print("|", end='')
             for i in range(len(array)):
                 if numOfRound:
@@ -163,35 +201,33 @@ class baseCalculations(data):
                     print(array[i], end=',\t')
             print("|")
 
+class reversPotate(data):
+    def __init__(self, a1: Optional [int]=10,  s1: Optional [int]=36, 
+                       l1: Optional [int]=178, l2: Optional [int]=159.8, 
+                       s4: Optional [int]=10,  s5: Optional [int]=135, 
+                       q=array([0,0,0,0,0]),   l4: Optional [int]=125) -> None:
+        super().__init__(a1, s1, l1, l2, s4, s5, q)
+    def Euler2Dekart(self, angels):
+        x = cos(angels[0])
+        y = cos(angels[1])
+        z = cos(angels[2])
+        return [x,y,z]
+    def calculationOfPotate(self, x, y, z):
+        k = (x**2+y**2)**0.5
+        zr = z + self.slovar["l4"] - self.slovar["s1"]
+        d = (k**2+zr**2)**0.5
+        try:
+            self.slovar["q"][0] = atan(y/x) # angle 1
+            self.slovar["q"][1] = (pi/2)-(atan(zr/k)+acos((d**2+self.slovar["l1"]**2-self.slovar["l2"]**2)/(2*d*self.slovar["l1"]))) # angle 2
+            self.slovar["q"][2] = pi-acos((-d**2+self.slovar["l1"]**2+self.slovar["l2"]**2)/(2*self.slovar["l1"]*self.slovar["l2"])) # angle 3
+            self.slovar["q"][3] = pi-(self.slovar["q"][1] + self.slovar["q"][2]) # angle 4
+        except:
+            logerr("Attention! Singularity has been reached. Calculations stopped")
 def main():
-    # Ob = baseCalculations()
-    # i = 1
-    # print(i)
-    # i=i+1
-    # baseCalculations.print_array(Ob.calculationOfDH([1,1,1,1,1]), 3)
-    # print(i)
-    # i=i+1
-    # baseCalculations.print_array(Ob.get_data("DH"), 3)
-    # mode = 0
-    # print(i)
-    # i=i+1
-    # baseCalculations.print_array(Ob.calculationOfT(mode), 3)
-    # print(i)
-    # i=i+1
-    # baseCalculations.print_array(Ob.calculationOfR(mode), 3)
-    # print(i)
-    # i=i+1
-    # baseCalculations.print_array(Ob.calculationOfP(mode), 3)
-    # print(i)
-    # i=i+1
-    # baseCalculations.print_array(Ob.getT(3), 3)
-    # print(i)
-    # i=i+1
-    # print(Ob.getT(), 3)
-    # print(i)
-    # i=i+1
-    # baseCalculations.print_array(Ob.EulersAngles([deg2rad(90),deg2rad(90),deg2rad(90)]), 3)
-    pass
+    Ob =reversPotate()
+    Ob.calculationOfPotate(0,1,1)
+    a = Ob.get_data("q")
+    loginfo(rad2deg(a[0][0]), rad2deg(a[0][1]), rad2deg(a[0][2]), rad2deg(a[0][3]), rad2deg(a[0][4]))
 
 if __name__=="__main__":
     main()
