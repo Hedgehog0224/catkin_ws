@@ -224,10 +224,11 @@ class reversPotate(data):
         except:
             logerr("Attention! Singularity has been reached. Calculations stopped")
 def main():
-    Ob =reversPotate()
-    Ob.calculationOfPotate(0,1,1)
-    a = Ob.get_data("q")
-    loginfo(rad2deg(a[0][0]), rad2deg(a[0][1]), rad2deg(a[0][2]), rad2deg(a[0][3]), rad2deg(a[0][4]))
+    while True:
+        motors = reversPotate()
+        x, y, z = input("Введите 3 числа от -0.9 до 1: ")
+        motors.calculationOfPotate(x, y, z)
+        print(self.slovar["q"])
 
 if __name__=="__main__":
     main()
