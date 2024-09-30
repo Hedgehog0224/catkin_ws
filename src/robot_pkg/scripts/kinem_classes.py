@@ -4,8 +4,7 @@ from math import pi, cos, sin, atan2, atan, acos
 from numpy import zeros, matmul, deg2rad, array, ndarray, rad2deg
 from typing import Union, Any, Optional
 # from matplotlib.pyplot import plot, show, subplot, figure
-from rospy import loginfo, logwarn, logerr
-
+from rospy
 import RPi.GPIO as GPIO
 import board
 from adafruit_pca9685 import PCA9685
@@ -123,7 +122,7 @@ class baseCalculations(data):
         """
         try: return self.T[num]
         except: 
-            logwarn("incorrect data. returned all array <T>:")
+            rospy.logwarn("incorrect data. returned all array <T>:")
             return self.T
         
     def EulersAngles(self, angles: list=[0,0,0]):
@@ -202,7 +201,7 @@ class baseCalculations(data):
                             print(array[i][j], end=',\t')
                     print("|")
         except:
-            loginfo("vector detected")
+            rospy.loginfo("vector detected")
             print("|", end='')
             for i in range(len(array)):
                 if numOfRound:
@@ -233,7 +232,7 @@ class reversPotate(data):
             self.slovar["q"][2] = pi-acos((-d**2+self.slovar["l1"]**2+self.slovar["l2"]**2)/(2*self.slovar["l1"]*self.slovar["l2"])) # angle 3
             self.slovar["q"][3] = pi-(self.slovar["q"][1] + self.slovar["q"][2]) # angle 4
         except:
-            logerr("Attention! Singularity has been reached. Calculations stopped")
+            rospy.logerr("Attention! Singularity has been reached. Calculations stopped")
 def main():
     while True:
         motors = reversPotate()
