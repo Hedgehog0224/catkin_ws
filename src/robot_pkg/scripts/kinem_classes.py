@@ -227,8 +227,34 @@ def main():
     while True:
         motors = reversPotate()
         x, y, z = input("Введите 3 числа от -0.9 до 1: ")
+        if (x < -0.9): x = -0.9
+        if (x > 1): x = 1
+        if (y < -0.9): y = -0.9
+        if (y > 1): y = 1
+        if (z < -0.9): z = -0.9
+        if (z > 1): z = 1
+            
         motors.calculationOfPotate(x, y, z)
         print(self.slovar["q"])
-
+        
+        i2c = board.I2C()  # uses board.SCL and board.SDA
+        pca = PCA9685(startServs.i2c)
+        pca.frequency = 50
+        servo10 = servo.Servo(pca.channels[10], actuation_range = 180, min_pulse = 750, max_pulse=2250)
+        servo11 = servo.Servo(pca.channels[11], actuation_range = 180, min_pulse = 750, max_pulse=2250)
+        servo12 = servo.Servo(pca.channels[12], actuation_range = 180, min_pulse = 750, max_pulse=2250)
+        servo13 = servo.Servo(pca.channels[13], actuation_range = 180, min_pulse = 750, max_pulse=2250)
+        servo14 = servo.Servo(pca.channels[14], actuation_range = 180, min_pulse = 750, max_pulse=2250)
+        # servo15 = servo.Servo(pca.channels[15], actuation_range = 180, min_pulse = 750, max_pulse=2250)
+        rospy.init_node('Servos')
+        # rospy.Subscriber("joy", Joy, self.callback_joy)
+        
+        servo10.angle = self.slovar["q"][0]
+        servo11.angle = self.slovar["q"][1]
+        servo12.angle = self.slovar["q"][2]
+        servo13.angle = self.slovar["q"][3]
+        servo14.angle = self.slovar["q"][4]
+        # servo15.angle = self.slovar["q"][5]
+    
 if __name__=="__main__":
     main()
