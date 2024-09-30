@@ -6,6 +6,15 @@ from typing import Union, Any, Optional
 # from matplotlib.pyplot import plot, show, subplot, figure
 from rospy import loginfo, logwarn, logerr
 
+import RPi.GPIO as GPIO
+import board
+from adafruit_pca9685 import PCA9685
+from adafruit_motor import servo
+# import time
+# import rospy
+# from robot_pkg.msg import servodata, xy
+# from sensor_msgs.msg import Joy 
+
 class data():
     def __init__(self, a1: Optional [int]=10,  s1: Optional [int]=36, 
                        l1: Optional [int]=178, l2: Optional [int]=159.8, 
@@ -240,7 +249,7 @@ def main():
         print(self.slovar["q"])
         
         i2c = board.I2C()  # uses board.SCL and board.SDA
-        pca = PCA9685(startServs.i2c)
+        pca = PCA9685(i2c)
         pca.frequency = 50
         servo10 = servo.Servo(pca.channels[10], actuation_range = 180, min_pulse = 750, max_pulse=2250)
         servo11 = servo.Servo(pca.channels[11], actuation_range = 180, min_pulse = 750, max_pulse=2250)
