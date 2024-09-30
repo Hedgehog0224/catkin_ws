@@ -237,7 +237,9 @@ class reversPotate(data):
 def main():
     while True:
         motors = reversPotate()
-        x, y, z = input("Введите 3 числа от -0.9 до 1: ")
+        x = float(input("Введите x от -0.9 до 1: "))
+        y = float(input("Введите y от -0.9 до 1: "))
+        z = float(input("Введите z от -0.9 до 1: "))
         if (x < -0.9): x = -0.9
         if (x > 1): x = 1
         if (y < -0.9): y = -0.9
