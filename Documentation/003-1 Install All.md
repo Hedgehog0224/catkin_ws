@@ -105,6 +105,22 @@
 
 _https://www.raspberrypi.com/documentation/computers/configuration.html_
 
+## 2.3 Настройка ОС после установки
+- apt-get update
+- apt-get install -y --no-install-recommends 
+- apt-get install ros-noetic-ros-base=1.5.0-1*
+- apt-get install nano
+- apt-get install git
+- apt-get install python3-pip
+- apt-get install ros-noetic-joy
+- apt-get install ros-noetic-rplidar-ros
+- python3 -m pip install evdev
+- python3 -m pip install RPi.GPIO
+- python3 -m pip install pyserial
+- python3 -m pip install board
+- python3 -m pip install opencv-contrib-python
+- pip3 install adafruit-circuitpython-pca9685
+- pip3 install adafruit-circuitpython-motor
 
 ## 3. Удаление ОС с Raspberry Pi
 При возникновении неустранимых критических ошибок на уровне ОС, неорбходимо извлечь microSD-карту, подключить к компьютеру и на этапе работы в установщике **Raspberry Pi Imager** перезаписать установщик.
