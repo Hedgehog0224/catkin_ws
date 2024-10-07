@@ -48,8 +48,8 @@ class startServs():
     startServs.servo11.angle = startServs.angls[2]
     startServs.servo12.angle = startServs.angls[3]
     startServs.servo13.angle = startServs.angls[4]
-    startServs.servo14.angle = startServs.angls[5]
-    startServs.servo15.angle = startServs.angls[6]
+    #startServs.servo14.angle = startServs.angls[5]
+    #startServs.servo15.angle = startServs.angls[6]
 
   @staticmethod
   def publis2topic() -> None:
@@ -60,8 +60,8 @@ class startServs():
     startServs.srvData.servo1 = startServs.servo11.angle
     startServs.srvData.servo2 = startServs.servo12.angle
     startServs.srvData.servo3 = startServs.servo13.angle
-    startServs.srvData.servo4 = startServs.servo14.angle
-    startServs.srvData.servo5 = startServs.servo15.angle
+    startServs.srvData.servo4 = 0 #startServs.servo14.angle
+    startServs.srvData.servo5 = 0 #startServs.servo15.angle
     startServs.pubServ.publish(startServs.srvData)
 
   @staticmethod
