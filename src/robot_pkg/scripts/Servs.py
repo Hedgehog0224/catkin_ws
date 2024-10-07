@@ -9,19 +9,18 @@ import rospy
 from robot_pkg.msg import servodata, xy
 from sensor_msgs.msg import Joy 
 
-
 class startServs():
   angls = [0,90,90,90,90,90,90]    # Первый элемент - выбранный сервопривод. Остальные - углы сервоприводов.
   def __init__(self):
     startServs.i2c = board.I2C()  # uses board.SCL and board.SDA
     startServs.pca = PCA9685(startServs.i2c)
     startServs.pca.frequency = 100
-    startServs.servo10 = servo.Servo(startServs.pca.channels[10], actuation_range = 180, min_pulse = 750, max_pulse=2250)
-    startServs.servo11 = servo.Servo(startServs.pca.channels[11], actuation_range = 180, min_pulse = 750, max_pulse=2250)
-    startServs.servo12 = servo.Servo(startServs.pca.channels[12], actuation_range = 180, min_pulse = 750, max_pulse=2250)
-    startServs.servo13 = servo.Servo(startServs.pca.channels[13], actuation_range = 180, min_pulse = 750, max_pulse=2250)
-    startServs.servo14 = servo.Servo(startServs.pca.channels[14], actuation_range = 180, min_pulse = 750, max_pulse=2250)
-    startServs.servo15 = servo.Servo(startServs.pca.channels[15], actuation_range = 180, min_pulse = 750, max_pulse=2250)
+    startServs.servo10 = servo.Servo(startServs.pca.channels[12], actuation_range = 180, min_pulse = 750, max_pulse=2250)
+    startServs.servo11 = servo.Servo(startServs.pca.channels[13], actuation_range = 180, min_pulse = 750, max_pulse=2250)
+    startServs.servo12 = servo.Servo(startServs.pca.channels[14], actuation_range = 180, min_pulse = 750, max_pulse=2250)
+    startServs.servo13 = servo.Servo(startServs.pca.channels[15], actuation_range = 180, min_pulse = 750, max_pulse=2250)
+    #startServs.servo14 = servo.Servo(startServs.pca.channels[16], actuation_range = 180, min_pulse = 750, max_pulse=2250)
+    #startServs.servo15 = servo.Servo(startServs.pca.channels[17], actuation_range = 180, min_pulse = 750, max_pulse=2250)
     rospy.init_node('Servos')
     rospy.Subscriber("joy", Joy, self.callback_joy)
     
@@ -30,8 +29,7 @@ class startServs():
     """
     Получение данных с джойстика, их обработка
     """
-    print(startServs.angls)
-    #huj
+    #print(startServs.angls)
     if data.buttons[0] == 1:
       startServs.angls[0] = 1
     if data.buttons[1] == 1:
@@ -40,10 +38,6 @@ class startServs():
       startServs.angls[0] = 3
     if data.buttons[3] == 1:
       startServs.angls[0] = 4
-    if data.buttons[4] == 1:
-      startServs.angls[0] = 5
-    if data.buttons[5] == 1:
-      startServs.angls[0] = 6
 
     if data.axes[0] < 0 and startServs.angls[startServs.angls[0]] > 20:
       startServs.angls[startServs.angls[0]] = startServs.angls[startServs.angls[0]] - 2
@@ -77,4 +71,4 @@ class startServs():
 
 Ob = startServs()
 # Ob.move()
-rospy.spin()
+#rospy.spin()
