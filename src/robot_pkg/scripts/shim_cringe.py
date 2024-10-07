@@ -107,7 +107,7 @@ class robotcl():
         else:            
             JoyArr = robotcl.abcd.set_speed(robotcl.JoySpeed[0], robotcl.JoySpeed[1], turnOsSys=45, ModeOfAngles = 1, FuncOfAngel = [0, -robotcl.JoyAngle])
             if ((abs(JoyArr[0])<0.05) and (abs(JoyArr[1])<0.05) and (abs(JoyArr[2])<0.05) and (abs(JoyArr[3])<0.05)):
-                rospy.loginfo("Stoping...")
+                rospy.loginfo("Move %s",[-robotcl.PredArrForMove[0]*2, -robotcl.PredArrForMove[1]*2, -robotcl.PredArrForMove[2]*2, -robotcl.PredArrForMove[3]*2])
                 robotcl.abcd.move([-robotcl.PredArrForMove[0]*2, -robotcl.PredArrForMove[1]*2, -robotcl.PredArrForMove[2]*2, -robotcl.PredArrForMove[3]*2], [0,0,0,0], robotcl.I2Cpins)
                 # rospy.logwarn("1) Speeds: %s; PreSpeeds: %s", JoyArr, robotcl.PredArrForMove)
                 sleep(0.05)
