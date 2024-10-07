@@ -68,7 +68,10 @@ class startServs():
   def callback_mode(data) -> None:
     pass
 
+def main():
+  Ob = startServs()
+  # Ob.move()
+  rospy.spin()
 
-Ob = startServs()
-# Ob.move()
-#rospy.spin()
+if __name__=="__main__":
+  main()
