@@ -56,10 +56,7 @@ class robotcl():
         """
         Функция обратной связи лидара и обработка данных с джойстика
         """
-        if robotcl.varStopAll:
-            robotcl.abcd.move(robotcl.abcd.set_speed(1, 1), [0, 0, 0, 0], robotcl.I2Cpins)
-
-        elif robotcl.mode == 0:
+        if robotcl.mode == 0:
             robotcl.abcd.move([0, 0, 0, 0], [0, 0, 0, 0], robotcl.I2Cpins)
             rospy.loginfo_throttle(20, 'The mode in which the robot does not drive is selected: %s', robotcl.mode)
             
@@ -73,6 +70,8 @@ class robotcl():
                 # rospy.loginfo_throttle(20, 'This is the user mode: %s', robotcl.mode)
 
         elif robotcl.mode == 2:
+            if robotcl.varStopAll:
+                robotcl.abcd.move(robotcl.abcd.set_speed(1, 1), [0, 0, 0, 0], robotcl.I2Cpins)
             # stTime = time()
             new_data = data.ranges[0:int(len(data.ranges)*0.4)] + data.ranges[int(len(data.ranges)*0.6):int(len(data.ranges))]
             size_nd = len(new_data)
@@ -105,8 +104,8 @@ class robotcl():
                 robotcl.PredArrForMove = ArrForMove
                 # workTime = time() - stTime
                 # rospy.loginfo("Time work: %s", workTime)
-        else:
-            print(robotcl.mode)
+        elif robotcl.mode == 1:
+            # print(robotcl.mode)
             JoyArr = robotcl.abcd.set_speed(robotcl.JoySpeed[0], robotcl.JoySpeed[1], turnOsSys=45, ModeOfAngles = 1, FuncOfAngel = [0, -robotcl.JoyAngle])
             if ((abs(JoyArr[0])<0.05) and (abs(JoyArr[1])<0.05) and (abs(JoyArr[2])<0.05) and (abs(JoyArr[3])<0.05)):
                 rospy.loginfo("Move %s",[-robotcl.PredArrForMove[0]*2, -robotcl.PredArrForMove[1]*2, -robotcl.PredArrForMove[2]*2, -robotcl.PredArrForMove[3]*2])
