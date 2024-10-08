@@ -52,7 +52,7 @@ class robotcl():
     
     @staticmethod
     def callback_scan(data) -> None:
-        print(robotcl.mode)
+        # print(robotcl.mode)
         """
         Функция обратной связи лидара и обработка данных с джойстика
         """
