@@ -15,10 +15,10 @@ class startServs():
     startServs.i2c = board.I2C()  # uses board.SCL and board.SDA
     startServs.pca = PCA9685(startServs.i2c)
     startServs.pca.frequency = 100
-    startServs.servo10 = servo.Servo(startServs.pca.channels[12], actuation_range = 180, min_pulse = 750, max_pulse=2250)
+    startServs.servo10 = servo.Servo(startServs.pca.channels[12], actuation_range = 180, min_pulse = 450, max_pulse=2750)
     startServs.servo11 = servo.Servo(startServs.pca.channels[13], actuation_range = 180, min_pulse = 750, max_pulse=2250)
-    startServs.servo12 = servo.Servo(startServs.pca.channels[14], actuation_range = 180, min_pulse = 750, max_pulse=2250)
-    startServs.servo13 = servo.Servo(startServs.pca.channels[15], actuation_range = 180, min_pulse = 750, max_pulse=2250)
+    startServs.servo12 = servo.Servo(startServs.pca.channels[14], actuation_range = 180, min_pulse = 450, max_pulse=2750)
+    startServs.servo13 = servo.Servo(startServs.pca.channels[15], actuation_range = 180, min_pulse = 450, max_pulse=2750)
     #startServs.servo14 = servo.Servo(startServs.pca.channels[16], actuation_range = 180, min_pulse = 750, max_pulse=2250)
     #startServs.servo15 = servo.Servo(startServs.pca.channels[17], actuation_range = 180, min_pulse = 750, max_pulse=2250)
     rospy.init_node('Servos')
@@ -39,9 +39,9 @@ class startServs():
     if data.buttons[3] == 1:
       startServs.angls[0] = 4
 
-    if data.axes[0] < 0 and startServs.angls[startServs.angls[0]] > 20:
+    if data.axes[0] < 0 and startServs.angls[startServs.angls[0]] > 0:
       startServs.angls[startServs.angls[0]] = startServs.angls[startServs.angls[0]] - 2
-    if data.axes[0] > 0 and startServs.angls[startServs.angls[0]] < 160:
+    if data.axes[0] > 0 and startServs.angls[startServs.angls[0]] < 180:
       startServs.angls[startServs.angls[0]] = startServs.angls[startServs.angls[0]] + 2
     
     startServs.servo10.angle = startServs.angls[1]
