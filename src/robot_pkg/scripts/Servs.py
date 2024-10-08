@@ -39,9 +39,9 @@ class startServs():
     if data.buttons[3] == 1:
       startServs.angls[0] = 4
 
-    if data.axes[0] < 0 and startServs.angls[startServs.angls[0]] > 0:
+    if data.axes[1] < 0 and startServs.angls[startServs.angls[0]] > 0:
       startServs.angls[startServs.angls[0]] = startServs.angls[startServs.angls[0]] - 2
-    if data.axes[0] > 0 and startServs.angls[startServs.angls[0]] < 180:
+    if data.axes[1] > 0 and startServs.angls[startServs.angls[0]] < 180:
       startServs.angls[startServs.angls[0]] = startServs.angls[startServs.angls[0]] + 2
     
     startServs.servo10.angle = startServs.angls[1]
