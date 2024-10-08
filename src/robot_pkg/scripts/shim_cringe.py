@@ -52,6 +52,7 @@ class robotcl():
     
     @staticmethod
     def callback_scan(data) -> None:
+        print(robotcl.mode)
         """
         Функция обратной связи лидара и обработка данных с джойстика
         """
@@ -104,7 +105,8 @@ class robotcl():
                 robotcl.PredArrForMove = ArrForMove
                 # workTime = time() - stTime
                 # rospy.loginfo("Time work: %s", workTime)
-        else:            
+        else:
+            print(robotcl.mode)
             JoyArr = robotcl.abcd.set_speed(robotcl.JoySpeed[0], robotcl.JoySpeed[1], turnOsSys=45, ModeOfAngles = 1, FuncOfAngel = [0, -robotcl.JoyAngle])
             if ((abs(JoyArr[0])<0.05) and (abs(JoyArr[1])<0.05) and (abs(JoyArr[2])<0.05) and (abs(JoyArr[3])<0.05)):
                 rospy.loginfo("Move %s",[-robotcl.PredArrForMove[0]*2, -robotcl.PredArrForMove[1]*2, -robotcl.PredArrForMove[2]*2, -robotcl.PredArrForMove[3]*2])
