@@ -1,6 +1,7 @@
 # Руководство по установке всего Программного Обеспечения
 
 # Часть 1 - Raspberry Pi 4
+![Raspberry](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Images/Folder-3-1/003-1-A.jpg)
 
 ## 1. Установка ОС на Raspberry Pi
 Не смотря на существование специализированной для одноплатного компьютера операционной системы Raspberry Pi OS, в проекте применяется дистрибутив **Ubuntu Server 20.04.5 LTS (64-bit)**.
@@ -164,4 +165,112 @@ ROS Noetic.
 - _https://www.ros.org/_;
 - *https://ru.wikipedia.org/wiki/ROS_(операционная_система)*;
 
+
+
 # Часть 2 - Jetson Nano Orin
+![Jetson](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Images/Folder-3-1/003-1-B.jpg)
+
+
+
+# Установка ROS
+ROS Noetic Ninjemys в первую очередь предназначен для дистрибутива Ubuntu 20.04, хотя другие системы (Debian, экспериментальные Windows и Arch) поддерживаются в разной степени.
+
+![Image_22](https://github.com/Hedgehog0224/catkin_ws/blob/docs/Documentation/Images/Folder-3-1/003-1-22.png)
+
+- __https://wiki.ros.org/noetic/Installation__
+- __https://wiki.ros.org/noetic/Installation/Ubuntu__
+- __http://wiki.ros.org/Distributions__;
+- __https://wiki.ros.org/noetic__;
+
+### 1. Настройка **sources.list**
+Настройте свой компьютер на прием программного обеспечения с packages.ros.org:
+```
+sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+
+```
+
+### 2. Настройка ключей
+```
+sudo apt install curl # if you haven't already installed curl
+
+curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
+```
+
+### 3. Загрузка и установка
+Обновление пакетов:
+```
+sudo apt update
+```
+
+Выбор версии для установки:
+- Базовая (библиотеки упаковки, сборки и связи ROS; никаких инструментов графического интерфейса);
+    ```
+    sudo apt install ros-noetic-desktop-full
+    ```
+- Десктопная (базовая версия, дополнительные инструменты - rqt, rviz и др.)
+    ```
+    sudo apt install ros-noetic-desktop
+    ```
+- Полная (десктопная версия, 2D/3D-симуляторы, пакеты 2D/3D-восприятия);
+    ```
+    sudo apt install ros-noetic-ros-base
+    ```
+
+Для установки конкретных пакетов:
+```
+sudo apt install ros-noetic-PACKAGE
+```
+
+например:
+```
+sudo apt install ros-noetic-slam-gmapping
+```
+
+Чтобы найти доступные пакеты:
+```
+apt search ros-noetic
+```
+
+__https://index.ros.org/packages/page/1/time/#noetic__
+
+
+### 4. Настройка среды
+Необходимо запустить скрипт в каждом терменале **bash**, в котором используется ROS:
+```
+source /opt/ros/noetic/setup.bash
+```
+
+#### Bash
+```
+echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+
+source ~/.bashrc
+```
+
+#### zsh
+```
+echo "source /opt/ros/noetic/setup.zsh" >> ~/.zshrc
+
+source ~/.zshrc
+```
+
+### 5. Зависимости для сборки пакетов
+Для создания и управления собственными рабочими пространствами ROS существуют различные инструменты и требования, которые распространяются отдельно. Например, **rosinstall** — это часто используемый инструмент командной строки, который позволяет вам легко загружать множество исходных деревьев для пакетов ROS с помощью одной команды.
+
+Чтобы установить этот инструмент и другие зависимости для сборки пакетов ROS, необходимо выполнить:
+```
+sudo apt install python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential
+```
+
+#### Инициализация rosdep
+Чтобы использовать многие инструменты ROS, необходимо инициализировать **rosdep**. Он позволяет легко устанавливать системные зависимости для исходного кода, который нужно скомпилировать, и требуется для запуска некоторых основных компонентов в ROS. Если **rosdep** ещё не установлен, необходимо выполнить:
+```
+sudo apt install python3-rosdep
+```
+
+Инициализация **rosdep**:
+```
+sudo rosdep init
+
+rosdep update
+```
